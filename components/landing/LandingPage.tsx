@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
+import { cn } from "@/lib/utils";
 
 /* ─── Feature Row ─── */
 function FeatureRow({
@@ -334,20 +335,34 @@ function RecallAnimation() {
 
 /* ─── Landing Page ─── */
 export function LandingPage() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <nav className={cn(
+        "fixed top-0 w-full z-50 backdrop-blur-md border-b transition-all duration-300",
+        scrolled
+          ? "bg-white/95 border-gray-100"
+          : "bg-[#0a0f0c]/80 border-white/5"
+      )}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">D</span>
             </div>
-            <span className="font-semibold text-gray-900 text-[15px]">
+            <span className={cn("font-semibold text-[15px] transition-colors", scrolled ? "text-gray-900" : "text-white")}>
               DentaFlow
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-600">
+          {/* Nav links */}
+          <div className={cn("hidden md:flex items-center gap-6 text-[13px] transition-colors", scrolled ? "text-gray-600" : "text-gray-300")}>
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
             <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
@@ -362,67 +377,127 @@ export function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative pt-32 pb-0 px-6 overflow-hidden bg-[#0a0f0c]">
+        {/* Radial glow — single, centered, emerald. Sparse. */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(5,150,105,0.18) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* Noise texture overlay — 4% opacity grain for depth */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        <div className="relative max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[12px] font-medium text-emerald-700 mb-6">
-              Now accepting early access applications · Singapore
-            </span>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
-              More than just a<br />
-              <span className="text-emerald-600">booking page.</span>
+            {/* Badge — gradient border, dark bg, pulsing dot */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-800/60 bg-emerald-950/40 px-4 py-1.5 text-[12px] text-emerald-300 mb-8 backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Now accepting Singapore clinics · Early access
+            </div>
+
+            {/* Headline — white, with ONE gradient accent on "booking page." */}
+            <h1 className="text-5xl md:text-6xl font-bold leading-[1.08] tracking-tight mb-6">
+              <span className="text-white">More than just a</span>
+              <br />
+              <span
+                className="text-white"
+                style={{
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundImage: "linear-gradient(90deg, #6ee7b7 0%, #34d399 50%, #10b981 100%)",
+                  backgroundClip: "text",
+                }}
+              >
+                booking page.
+              </span>
             </h1>
-            <p className="mt-6 text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+
+            <p className="text-[17px] text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
               DentaFlow gives Singapore dental clinics the tools to fill chairs,
               reduce no-shows, and bring patients back — automatically.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="#waitlist">
-                <Button
-                  size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-[15px] active:scale-[0.98]"
-                >
+                <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-8 h-12 rounded-lg text-[15px] font-semibold active:scale-[0.98] transition-all duration-150">
                   Request early access →
-                </Button>
+                </button>
               </a>
               <a
                 href="https://dentaflow-three.vercel.app/book/shuang-dentistry"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-12 px-8 text-[15px] border-gray-200"
-                >
+                <button className="h-12 px-8 rounded-lg text-[15px] font-medium text-gray-300 border border-white/10 hover:border-white/20 hover:text-white bg-white/5 hover:bg-white/10 transition-all duration-150 backdrop-blur-sm">
                   See live demo ↗
-                </Button>
+                </button>
               </a>
             </div>
           </motion.div>
 
-          {/* Browser frame with booking page screenshot */}
+          {/* Product screenshot with floating cards */}
           <motion.div
             id="demo"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-16 relative"
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="mt-16 relative mx-auto max-w-3xl"
           >
-            <div className="rounded-xl border border-gray-200 shadow-2xl overflow-hidden">
-              <div className="h-9 bg-gray-100 border-b border-gray-200 flex items-center px-4 gap-2">
+            {/* Floating card — top right */}
+            <motion.div
+              initial={{ opacity: 0, y: 16, rotate: 3 }}
+              animate={{ opacity: 1, y: 0, rotate: 3 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="absolute -top-5 -right-4 md:-right-10 z-10 bg-white rounded-xl shadow-2xl p-3 w-44 hidden sm:block"
+            >
+              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-1">Today</p>
+              <p className="text-2xl font-bold text-gray-900 leading-none">12</p>
+              <p className="text-[11px] text-gray-500 mt-0.5">appointments booked</p>
+              <p className="text-[11px] text-emerald-600 mt-0.5 font-medium">↑ 3 vs yesterday</p>
+            </motion.div>
+
+            {/* Floating card — bottom left — patient notification toast */}
+            <motion.div
+              initial={{ opacity: 0, y: 16, rotate: -2 }}
+              animate={{ opacity: 1, y: 0, rotate: -2 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="absolute -bottom-4 -left-4 md:-left-10 z-10 bg-white rounded-xl shadow-2xl p-3 w-52 hidden sm:block"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-[11px] font-semibold text-emerald-700">WJ</div>
+                <div>
+                  <p className="text-[11px] font-semibold text-gray-900 leading-tight">Wong Wei Jie booked</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">Scaling · 10:00 AM · Yishun</p>
+                </div>
+              </div>
+              <div className="mt-2 text-[10px] text-gray-400 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                WhatsApp confirmation sent
+              </div>
+            </motion.div>
+
+            {/* Browser chrome + screenshot */}
+            <div className="rounded-xl border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
+              <div className="h-9 bg-[#1a1f1d] border-b border-white/5 flex items-center px-4 gap-2">
                 <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-amber-400" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-amber-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
                 </div>
                 <div className="flex-1 mx-4">
-                  <div className="bg-white rounded-md border border-gray-200 h-5 flex items-center px-3">
-                    <span className="text-[11px] text-gray-400">
+                  <div className="bg-white/5 rounded-md border border-white/10 h-5 flex items-center px-3">
+                    <span className="text-[11px] text-gray-500">
                       dentaflow.com/book/shuang-dentistry
                     </span>
                   </div>
@@ -435,13 +510,21 @@ export function LandingPage() {
                 className="w-full"
               />
             </div>
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+
+            {/* Fade to dark at bottom — seamless into social proof section */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0a0f0c] to-transparent pointer-events-none" />
           </motion.div>
+
+          {/* Extra padding so fade works */}
+          <div className="h-20" />
         </div>
+
+        {/* Bottom fade from dark to white — seamless transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none" />
       </section>
 
       {/* Social proof bar */}
-      <section className="py-12 border-y border-gray-100 bg-gray-50">
+      <section className="py-12 border-b border-gray-100 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-[12px] font-semibold uppercase tracking-widest text-gray-400 mb-6">
             Trusted by Singapore dental clinics
@@ -533,7 +616,7 @@ export function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="py-24 px-6 bg-white">
+      <section id="how-it-works" className="py-24 px-6 bg-white section-glow-top">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -626,7 +709,7 @@ export function LandingPage() {
       </section>
 
       {/* Feature pillars */}
-      <section id="features" className="py-24 bg-gray-50 px-6">
+      <section id="features" className="py-24 bg-gray-50 px-6 dot-grid">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -686,7 +769,7 @@ export function LandingPage() {
       </section>
 
       {/* Comparison table */}
-      <section className="py-24 px-6 bg-gray-50">
+      <section className="py-24 px-6 bg-gray-50 dot-grid">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -963,7 +1046,7 @@ function FaqSection() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-white">
+    <section className="py-24 px-6 bg-white section-glow-top">
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
