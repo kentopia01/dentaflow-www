@@ -348,9 +348,10 @@ export function LandingPage() {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-600">
-            <a href="#features">Features</a>
-            <a href="#demo">Demo</a>
-            <a href="#waitlist">Early Access</a>
+            <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
+            <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
+            <a href="#waitlist" className="hover:text-gray-900 transition-colors">Early Access</a>
           </div>
           <a href="#waitlist">
             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 active:scale-[0.98]">
@@ -531,6 +532,99 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section id="how-it-works" className="py-24 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Setup in minutes</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              From zero to fully automated<br />in under 10 minutes.
+            </h2>
+            <p className="mt-4 text-gray-500 text-[15px] max-w-xl mx-auto">
+              No IT team. No training week. No migration project. Most clinics are live before lunch.
+            </p>
+          </motion.div>
+
+          {/* Steps — connected with a line */}
+          <div className="relative">
+            {/* Connecting line (desktop only) */}
+            <div className="hidden md:block absolute top-8 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-emerald-100" />
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  step: "01",
+                  time: "2 min",
+                  title: "Set up your clinic",
+                  description: "Enter your clinic name, add your outlets, and select which treatments patients can book online. That\u2019s it \u2014 your profile is ready.",
+                  icon: "\uD83C\uDFE5",
+                },
+                {
+                  step: "02",
+                  time: "1 min",
+                  title: "Share your booking link",
+                  description: "Paste one line of code on your website \u2014 or skip the website entirely. Your DentaFlow link works everywhere: WhatsApp bio, Google My Business, Instagram.",
+                  icon: "\uD83D\uDD17",
+                },
+                {
+                  step: "03",
+                  time: "Ongoing",
+                  title: "Run on autopilot",
+                  description: "Patients book. Reminders send automatically. Recalls queue up. You manage from one dashboard \u2014 instead of 14 WhatsApp chats.",
+                  icon: "\u26A1",
+                },
+              ].map((step, i) => (
+                <motion.div
+                  key={step.step}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.15 }}
+                  className="relative text-center"
+                >
+                  {/* Step circle */}
+                  <div className="mx-auto mb-6 relative">
+                    <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center mx-auto relative z-10">
+                      <span className="text-2xl">{step.icon}</span>
+                    </div>
+                    <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center z-20">
+                      {i + 1}
+                    </span>
+                  </div>
+                  {/* Time badge */}
+                  <span className="inline-block mb-3 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-0.5">
+                    {step.time}
+                  </span>
+                  <h3 className="text-[17px] font-semibold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-[14px] text-gray-500 leading-relaxed max-w-[260px] mx-auto">{step.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA under steps */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-14 text-center"
+          >
+            <a href="#waitlist">
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-[15px] active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
+                Get started in 10 minutes →
+              </button>
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Feature pillars */}
       <section id="features" className="py-24 bg-gray-50 px-6">
         <div className="max-w-6xl mx-auto">
@@ -573,6 +667,99 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* Integration section — expandable */}
+      <IntegrationSection />
+
+      {/* Mid-page CTA band */}
+      <section className="py-14 px-6 bg-emerald-600">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <p className="text-white text-xl font-semibold">Ready to stop managing bookings on WhatsApp?</p>
+            <p className="text-emerald-100 text-[14px] mt-1">Join 40+ Singapore clinics on the early access waitlist.</p>
+          </div>
+          <a href="#waitlist">
+            <button className="flex-shrink-0 bg-white hover:bg-gray-50 text-emerald-700 font-semibold px-8 h-12 rounded-lg text-[15px] active:scale-[0.98] transition-all duration-150 whitespace-nowrap">
+              Request early access →
+            </button>
+          </a>
+        </div>
+      </section>
+
+      {/* Comparison table */}
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Why switch</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              WhatsApp isn&apos;t a booking system.<br />It&apos;s just the one you&apos;re used to.
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm"
+          >
+            {/* Table header */}
+            <div className="grid grid-cols-3 bg-gray-50 border-b border-gray-200">
+              <div className="px-6 py-4 text-[13px] font-medium text-gray-500">Feature</div>
+              <div className="px-6 py-4 text-center">
+                <span className="text-[13px] font-semibold text-gray-400">WhatsApp + Phone</span>
+              </div>
+              <div className="px-6 py-4 text-center">
+                <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-emerald-700">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                  DentaFlow
+                </span>
+              </div>
+            </div>
+
+            {/* Rows */}
+            {[
+              { feature: "Online booking", wa: "\u274C Not possible", df: "\u2705 24/7, instant" },
+              { feature: "Appointment reminders", wa: "\uD83D\uDE30 Typed manually", df: "\u2705 Automatic" },
+              { feature: "No-show rate", wa: "~12% industry avg", df: "~4% with reminders" },
+              { feature: "Recall campaigns", wa: "\u274C Post-its / memory", df: "\u2705 Auto-queue" },
+              { feature: "Patient history", wa: "\uD83D\uDCF1 Scattered in chats", df: "\u2705 Full profiles" },
+              { feature: "Multi-outlet management", wa: "\u274C Separate groups", df: "\u2705 One dashboard" },
+              { feature: "Your time per day", wa: "45+ min on messages", df: "~5 min to review" },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-3 border-b border-gray-100 last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}`}
+              >
+                <div className="px-6 py-3.5 text-[13px] font-medium text-gray-700">{row.feature}</div>
+                <div className="px-6 py-3.5 text-center text-[13px] text-gray-500">{row.wa}</div>
+                <div className="px-6 py-3.5 text-center text-[13px] font-medium text-gray-900">{row.df}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* CTA under table */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-10 text-center"
+          >
+            <a href="#waitlist">
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-[15px] active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
+                Make the switch →
+              </button>
+            </a>
+            <p className="text-[12px] text-gray-400 mt-3">No commitment. No credit card. Singapore-based support.</p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Numbers section */}
       <section className="py-20 bg-emerald-600 px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -606,6 +793,9 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <FaqSection />
+
       {/* Waitlist form section */}
       <section id="waitlist" className="py-24 px-6 bg-white">
         <div className="max-w-xl mx-auto text-center">
@@ -627,21 +817,210 @@ export function LandingPage() {
             <div className="w-6 h-6 rounded bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-xs">D</span>
             </div>
-            <span className="text-[13px] font-semibold text-gray-700">
-              DentaFlow
-            </span>
+            <span className="text-[13px] font-semibold text-gray-700">DentaFlow</span>
           </div>
-          <p className="text-[12px] text-gray-400">
-            Built for Singapore dental clinics · © 2026 DentaFlow
-          </p>
-          <a
-            href="/sign-in"
-            className="text-[12px] text-gray-400 hover:text-gray-600"
-          >
-            Clinic login →
-          </a>
+          <div className="flex items-center gap-6 text-[12px] text-gray-400">
+            <a href="/about" className="hover:text-gray-600 transition-colors">About</a>
+            <a href="https://sgdentistry.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">SGDentistry</a>
+            <a href="#waitlist" className="hover:text-gray-600 transition-colors">Early Access</a>
+            <a href="https://dentaflow-three.vercel.app/sign-in" className="hover:text-gray-600 transition-colors">Clinic login →</a>
+          </div>
+          <p className="text-[11px] text-gray-400">© 2026 DentaFlow · Built for Singapore</p>
         </div>
       </footer>
     </div>
+  );
+}
+
+/* ─── Integration Section ─── */
+function IntegrationSection() {
+  const [open, setOpen] = useState(false);
+
+  const integrations = [
+    {
+      icon: "\uD83D\uDD17",
+      title: "No website?",
+      subtitle: "Use your DentaFlow page",
+      description: "Every clinic gets a hosted booking page at dentaflow-three.vercel.app/book/your-clinic. Share it on WhatsApp, Google My Business, or Instagram \u2014 no website needed.",
+      code: "dentaflow-three.vercel.app/book/shuang-dentistry",
+      codeLabel: "Your booking URL",
+    },
+    {
+      icon: "\uD83D\uDCBB",
+      title: "Any website",
+      subtitle: "One line of HTML",
+      description: "Paste a single script tag anywhere on your existing website. Works on any platform \u2014 no developer needed.",
+      code: '<script src="https://dentaflow-three.vercel.app/embed.js" data-dentaflow-clinic="your-clinic" data-dentaflow-float="true"></script>',
+      codeLabel: "Floating button embed",
+    },
+    {
+      icon: "\uD83D\uDCD0",
+      title: "WordPress / Wix",
+      subtitle: "Inline form embed",
+      description: "Drop the booking form directly into any page. Paste the embed div and script into any HTML block or custom widget.",
+      code: '<div data-dentaflow="inline" data-clinic="your-clinic"></div>\n<script src="https://dentaflow-three.vercel.app/embed.js"></script>',
+      codeLabel: "Inline embed",
+    },
+    {
+      icon: "\uD83E\uDE84",
+      title: "Popup on any button",
+      subtitle: "Zero code change",
+      description: 'Add data-dentaflow="popup" to any existing button on your site. The booking modal opens on click \u2014 no redirect, no new page.',
+      code: '<button data-dentaflow="popup" data-clinic="your-clinic">Book Now</button>',
+      codeLabel: "Popup trigger",
+    },
+  ];
+
+  return (
+    <section className="py-16 px-6 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+        >
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Flexible setup</p>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Works with your existing setup — or none at all.
+            </h2>
+            <p className="text-[14px] text-gray-500 mt-1">
+              Website, no website, WordPress, Wix — DentaFlow fits in everywhere.
+            </p>
+          </div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex-shrink-0 flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            {open ? "Hide" : "See how"}
+            <span className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>↓</span>
+          </button>
+        </motion.div>
+
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8 grid sm:grid-cols-2 gap-4"
+          >
+            {integrations.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08 }}
+                className="rounded-xl border border-gray-200 bg-white p-5"
+              >
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl">{item.icon}</span>
+                  <div>
+                    <p className="text-[14px] font-semibold text-gray-900">{item.title}</p>
+                    <p className="text-[12px] text-emerald-600 font-medium">{item.subtitle}</p>
+                  </div>
+                </div>
+                <p className="text-[13px] text-gray-500 mb-3 leading-relaxed">{item.description}</p>
+                <div className="rounded-lg bg-gray-50 border border-gray-100 p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">{item.codeLabel}</p>
+                  <code className="text-[11px] text-gray-700 break-all leading-relaxed">{item.code}</code>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ─── FAQ Section ─── */
+function FaqSection() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      q: "Do my patients need to download an app?",
+      a: "No. Patients book through a regular web page in their browser \u2014 no app, no account, no friction. They pick a time, enter their name and mobile, and they\u2019re done. Most patients complete the booking in under 90 seconds.",
+    },
+    {
+      q: "Do I need a website to use DentaFlow?",
+      a: "No. Every clinic gets a hosted booking page at dentaflow.com/book/your-clinic. You can share this link directly in your WhatsApp bio, Google My Business listing, Instagram profile, or anywhere else. If you do have a website, we have a one-line embed that drops a floating booking button on every page.",
+    },
+    {
+      q: "What happens to my existing clinic WhatsApp number?",
+      a: "Nothing changes for your personal clinic WhatsApp. DentaFlow uses a dedicated clinic number (via WhatsApp Business API) for automated messages \u2014 booking confirmations, reminders, and recalls. Patients can reply to those messages and you\u2019ll see the thread in DentaFlow. Your personal number stays separate.",
+    },
+    {
+      q: "Is DentaFlow compliant with PDPA?",
+      a: "Yes. The booking form includes explicit consent checkboxes for data collection and WhatsApp communications, aligned with Singapore\u2019s Personal Data Protection Act. Patient data is stored in Singapore-region servers and you retain full control of your data.",
+    },
+    {
+      q: "How long does setup take?",
+      a: "Under 10 minutes for a single-outlet clinic. You\u2019ll create your account, add your treatments, and have a live booking link ready to share. For multi-outlet groups, allow 20\u201330 minutes to configure each outlet\u2019s operating hours and treatment menu.",
+    },
+  ];
+
+  return (
+    <section className="py-24 px-6 bg-white">
+      <div className="max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-3">Got questions?</p>
+          <h2 className="text-3xl font-bold text-gray-900">Common questions</h2>
+        </motion.div>
+
+        <div className="space-y-2">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              className="rounded-xl border border-gray-200 bg-white overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenIdx(openIdx === i ? null : i)}
+                className="w-full flex items-center justify-between px-5 py-4 text-left"
+              >
+                <span className="text-[14px] font-medium text-gray-900 pr-4">{faq.q}</span>
+                <span className={`flex-shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-[12px] transition-transform duration-200 ${openIdx === i ? "rotate-180" : ""}`}>
+                  ↓
+                </span>
+              </button>
+              {openIdx === i && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.2 }}
+                  className="px-5 pb-4"
+                >
+                  <p className="text-[14px] text-gray-500 leading-relaxed border-t border-gray-100 pt-3">{faq.a}</p>
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-10 text-center"
+        >
+          <p className="text-[13px] text-gray-500">Still have questions?</p>
+          <a href="mailto:hello@dentaflow.com" className="text-[13px] text-emerald-600 hover:underline mt-1 inline-block">
+            hello@dentaflow.com →
+          </a>
+        </motion.div>
+      </div>
+    </section>
   );
 }
