@@ -59,6 +59,100 @@ async function appendToSheet(data: z.infer<typeof waitlistSchema>) {
   );
 }
 
+// ── Welcome email to applicant (Gmail OAuth) ─────────────────────────────────
+
+async function sendWelcomeEmail(data: z.infer<typeof waitlistSchema>) {
+  const clientId = process.env.GMAIL_CLIENT_ID!;
+  const clientSecret = process.env.GMAIL_CLIENT_SECRET!;
+  const refreshToken = process.env.GMAIL_REFRESH_TOKEN!;
+  const from = "nora@01-digital.com";
+
+  const { access_token } = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId, client_secret: clientSecret,
+      refresh_token: refreshToken, grant_type: "refresh_token",
+    }),
+  }).then(r => r.json()) as { access_token: string };
+
+  const firstName = data.name.split(" ")[0];
+  const landingUrl = "https://dentaflow-www.vercel.app";
+
+  const html = `
+<div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827;">
+  <div style="padding:32px 0 24px;">
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:32px;">
+      <div style="width:32px;height:32px;background:#059669;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <span style="color:#fff;font-weight:700;font-size:14px;">D</span>
+      </div>
+      <span style="font-size:16px;font-weight:600;color:#111827;">DentaFlow</span>
+    </div>
+
+    <h1 style="font-size:24px;font-weight:700;margin:0 0 12px;line-height:1.3;">
+      You're on the list, ${firstName}.
+    </h1>
+    <p style="font-size:15px;color:#6b7280;margin:0 0 24px;line-height:1.6;">
+      Thanks for signing up for DentaFlow early access. We're onboarding Singapore dental clinics in batches and will reach out as soon as your slot opens — usually within 2 weeks.
+    </p>
+
+    <div style="background:#f9fafb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+      <p style="font-size:13px;font-weight:600;color:#374151;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.05em;">What happens next</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:#fff;font-size:11px;font-weight:700;">1</span>
+          </div>
+          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">We review your application and confirm your clinic details</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:#fff;font-size:11px;font-weight:700;">2</span>
+          </div>
+          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">You get a personal setup call — we'll have your clinic live in under 10 minutes</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:#fff;font-size:11px;font-weight:700;">3</span>
+          </div>
+          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">Patients can book online, reminders send automatically, recalls queue themselves</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="${landingUrl}" style="display:inline-block;background:#059669;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;margin-bottom:32px;">
+      Learn more about DentaFlow →
+    </a>
+
+    <hr style="border:none;border-top:1px solid #f3f4f6;margin:0 0 24px;">
+    <p style="font-size:13px;color:#9ca3af;margin:0;line-height:1.6;">
+      You signed up as <strong>${data.clinicName}</strong>. If you have any questions in the meantime, just reply to this email.
+    </p>
+  </div>
+</div>`;
+
+  const message = [
+    `From: DentaFlow <${from}>`,
+    `To: ${data.name} <${data.email}>`,
+    `Subject: You're on the DentaFlow waitlist`,
+    "MIME-Version: 1.0",
+    "Content-Type: text/html; charset=UTF-8",
+    "",
+    html,
+  ].join("\r\n");
+
+  const res = await fetch(
+    `https://gmail.googleapis.com/gmail/v1/users/${encodeURIComponent(from)}/messages/send`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${access_token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ raw: Buffer.from(message).toString("base64url") }),
+    }
+  );
+
+  if (!res.ok) throw new Error(`Gmail: ${await res.text()}`);
+}
+
 // ── Telegram notification ─────────────────────────────────────────────────────
 
 async function notifyTelegram(data: z.infer<typeof waitlistSchema>) {
@@ -93,15 +187,17 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = waitlistSchema.parse(body);
 
-    const [sheetsResult, telegramResult] = await Promise.allSettled([
+    const [sheetsResult, telegramResult, emailResult] = await Promise.allSettled([
       appendToSheet(data),
       notifyTelegram(data),
+      sendWelcomeEmail(data),
     ]);
 
     if (sheetsResult.status === "rejected") console.error("[waitlist] Sheets:", sheetsResult.reason);
     if (telegramResult.status === "rejected") console.error("[waitlist] Telegram:", telegramResult.reason);
+    if (emailResult.status === "rejected") console.error("[waitlist] Welcome email:", emailResult.reason);
 
-    console.log("[waitlist]", { clinic: data.clinicName, sheets: sheetsResult.status, telegram: telegramResult.status });
+    console.log("[waitlist]", { clinic: data.clinicName, sheets: sheetsResult.status, telegram: telegramResult.status, email: emailResult.status });
     return NextResponse.json({ ok: true });
 
   } catch (error) {
