@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
+import { NumberTicker } from "./NumberTicker";
+import { GlowCard } from "./GlowCard";
 
 
 /* ─── Feature Row ─── */
@@ -500,28 +502,33 @@ export function LandingPage() {
       {/* Social proof bar */}
       <section className="py-12 border-b border-gray-100 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-[12px] font-semibold uppercase tracking-widest text-gray-400 mb-6">
-            Trusted by Singapore dental clinics
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 items-center">
-            {[
-              "Shuang Dentistry · Yishun",
-              "Smile Dental · Orchard",
-              "Smile Dental · Tampines",
-            ].map((name) => (
-              <span
-                key={name}
-                className="text-[14px] font-medium text-gray-600"
-              >
-                {name}
-              </span>
-            ))}
+          <div className="flex flex-col items-center gap-3">
+            {/* Avatar strip */}
+            <div className="flex items-center">
+              {[
+                { initials: "SD", bg: "bg-emerald-600" },
+                { initials: "SM", bg: "bg-emerald-500" },
+                { initials: "TD", bg: "bg-emerald-700" },
+                { initials: "TC", bg: "bg-emerald-400" },
+                { initials: "AD", bg: "bg-emerald-800" },
+              ].map((avatar, i) => (
+                <motion.div
+                  key={avatar.initials}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.08, duration: 0.3 }}
+                  viewport={{ once: true }}
+                  className={`w-9 h-9 rounded-full ${avatar.bg} border-2 border-white flex items-center justify-center text-white text-[11px] font-semibold flex-shrink-0 ${i !== 0 ? "-ml-3" : ""}`}
+                >
+                  {avatar.initials}
+                </motion.div>
+              ))}
+              <span className="ml-3 text-sm text-gray-600">+40 clinics on early access</span>
+            </div>
+            <p className="text-[12px] font-semibold uppercase tracking-widest text-gray-400">
+              Trusted by Singapore dental clinics
+            </p>
           </div>
-          <p className="mt-6 text-[13px] text-gray-500">
-            Joining{" "}
-            <span className="font-semibold text-gray-900">40+ clinics</span> on
-            the early access waitlist
-          </p>
         </div>
       </section>
 
@@ -697,28 +704,28 @@ export function LandingPage() {
             label="BOOKINGS"
             title="Online booking that works without a website."
             description="Every clinic gets a hosted booking page, ready to share anywhere — Google Business Profile, SGDentistry, WhatsApp bio. Each outlet has its own URL. Patients book in under 90 seconds. No calls, no back-and-forth."
-            visual={<BookingAnimation />}
+            visual={<GlowCard><BookingAnimation /></GlowCard>}
             align="right"
           />
           <FeatureRow
             label="PATIENTS"
             title="One record per patient. Always up to date."
             description="Patient profiles build automatically from every booking. Import your existing list from Dental4Windows or any CSV. Appointment history, WhatsApp status, and recall schedule — in one place, not scattered across chats."
-            visual={<PatientAnimation />}
+            visual={<GlowCard><PatientAnimation /></GlowCard>}
             align="left"
           />
           <FeatureRow
             label="MESSAGING"
             title="The confirmation was sent before you looked up."
             description="The moment a patient books, a WhatsApp confirmation goes out. A 24-hour reminder follows. Then a 2-hour reminder. No-shows fall by 65%. Your receptionist sends zero manual messages."
-            visual={<MessagingAnimation />}
+            visual={<GlowCard><MessagingAnimation /></GlowCard>}
             align="right"
           />
           <FeatureRow
             label="RECALL"
             title="Patients who haven't returned in 6 months are revenue waiting."
             description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
-            visual={<RecallAnimation />}
+            visual={<GlowCard><RecallAnimation /></GlowCard>}
             align="left"
           />
         </div>
@@ -875,10 +882,16 @@ export function LandingPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { stat: "↓ 65%", label: "Reduction in no-shows" },
-              { stat: "45 min", label: "Saved per day on confirmations" },
               {
-                stat: "$800+",
+                ticker: <NumberTicker value={65} prefix="↓ " suffix="%" className="text-4xl font-bold text-white" />,
+                label: "Reduction in no-shows",
+              },
+              {
+                ticker: <NumberTicker value={45} suffix=" min" className="text-4xl font-bold text-white" />,
+                label: "Saved per day on confirmations",
+              },
+              {
+                ticker: <NumberTicker value={800} prefix="$" suffix="+" className="text-4xl font-bold text-white" />,
                 label: "Recovered monthly from recall campaigns",
               },
             ].map((item, i) => (
@@ -890,7 +903,7 @@ export function LandingPage() {
                 transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <p className="text-4xl font-bold text-white">{item.stat}</p>
+                {item.ticker}
                 <p className="mt-2 text-emerald-100 text-[14px]">
                   {item.label}
                 </p>
@@ -905,14 +918,30 @@ export function LandingPage() {
 
       {/* Waitlist form section */}
       <section id="waitlist" className="py-24 px-6 bg-white">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900">
-            Built in Singapore. Open worldwide.
-          </h2>
-          <p className="mt-4 text-gray-500 text-[15px]">
-            We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out when your slot opens — usually within 2 weeks.
-          </p>
-          <WaitlistForm />
+        <div className="max-w-xl mx-auto">
+          {/* Gradient border card */}
+          <div className="relative rounded-2xl overflow-hidden p-[2px]">
+            {/* Spinning conic gradient border */}
+            <motion.div
+              style={{
+                background:
+                  "conic-gradient(from 0deg, #059669 0%, #d1fae5 25%, #ffffff 50%, #d1fae5 75%, #059669 100%)",
+              }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-[-50%] w-[200%] h-[200%]"
+            />
+            {/* Inner content */}
+            <div className="relative bg-white rounded-2xl p-8 text-center">
+              <h2 className="text-3xl font-bold text-gray-900">
+                Built in Singapore. Open worldwide.
+              </h2>
+              <p className="mt-4 text-gray-500 text-[15px]">
+                We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out when your slot opens — usually within 2 weeks.
+              </p>
+              <WaitlistForm />
+            </div>
+          </div>
         </div>
       </section>
 
