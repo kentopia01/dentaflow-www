@@ -721,29 +721,29 @@ export function LandingPage() {
 
           <FeatureRow
             label="BOOKINGS"
-            title="Your clinic's booking page, live in minutes."
-            description="Patients book directly from your Google Business Profile, SGDentistry listing, or any link — without calling or messaging. Each outlet gets its own URL. You see every booking instantly."
+            title="Online booking that works without a website."
+            description="Every clinic gets a hosted booking page, ready to share anywhere — Google Business Profile, SGDentistry, WhatsApp bio. Each outlet has its own URL. Patients book in under 90 seconds. No calls, no back-and-forth."
             visual={<BookingAnimation />}
             align="right"
           />
           <FeatureRow
             label="PATIENTS"
-            title="Every patient. Every visit. Every message."
-            description="Full patient profiles built automatically from bookings. Import your existing list from Dental4Windows or any CSV. WhatsApp opt-in status, recall queue, and appointment history in one place."
+            title="One record per patient. Always up to date."
+            description="Patient profiles build automatically from every booking. Import your existing list from Dental4Windows or any CSV. Appointment history, WhatsApp status, and recall schedule — in one place, not scattered across chats."
             visual={<PatientAnimation />}
             align="left"
           />
           <FeatureRow
             label="MESSAGING"
-            title="Confirmations and reminders on autopilot."
-            description="The moment a patient books, DentaFlow sends a WhatsApp confirmation. Then a 24-hour reminder. Then a 2-hour reminder. No-shows drop. Zero manual work."
+            title="The confirmation was sent before you looked up."
+            description="The moment a patient books, a WhatsApp confirmation goes out. A 24-hour reminder follows. Then a 2-hour reminder. No-shows fall by 65%. Your receptionist sends zero manual messages."
             visual={<MessagingAnimation />}
             align="right"
           />
           <FeatureRow
             label="RECALL"
-            title="Your recall list is revenue you haven't collected yet."
-            description="One click sends a WhatsApp recall message to every patient overdue for their 6-month check. That's not admin. That's booked appointments you were leaving on the table."
+            title="Patients who haven't returned in 6 months are revenue waiting."
+            description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
             visual={<RecallAnimation />}
             align="left"
           />
@@ -791,14 +791,16 @@ export function LandingPage() {
             className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm"
           >
             {/* Table header */}
-            <div className="grid grid-cols-3 bg-gray-50 border-b border-gray-200">
-              <div className="px-6 py-4 text-[13px] font-medium text-gray-500">Feature</div>
-              <div className="px-6 py-4 text-center">
+            <div className="grid grid-cols-3">
+              <div className="px-6 py-5 text-[11px] font-semibold uppercase tracking-wider text-gray-400 border-b border-gray-100">
+                Capability
+              </div>
+              <div className="px-6 py-5 text-center border-b border-gray-100 border-l border-gray-100">
                 <span className="text-[13px] font-semibold text-gray-400">WhatsApp + Phone</span>
               </div>
-              <div className="px-6 py-4 text-center">
-                <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-emerald-700">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+              <div className="px-6 py-5 text-center border-b border-gray-100 border-l border-gray-100 bg-emerald-50/60">
+                <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-emerald-700">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                   DentaFlow
                 </span>
               </div>
@@ -806,21 +808,69 @@ export function LandingPage() {
 
             {/* Rows */}
             {[
-              { feature: "Online booking", wa: "\u274C Not possible", df: "\u2705 24/7, instant" },
-              { feature: "Appointment reminders", wa: "\uD83D\uDE30 Typed manually", df: "\u2705 Automatic" },
-              { feature: "No-show rate", wa: "~12% industry avg", df: "~4% with reminders" },
-              { feature: "Recall campaigns", wa: "\u274C Post-its / memory", df: "\u2705 Auto-queue" },
-              { feature: "Patient history", wa: "\uD83D\uDCF1 Scattered in chats", df: "\u2705 Full profiles" },
-              { feature: "Multi-outlet management", wa: "\u274C Separate groups", df: "\u2705 One dashboard" },
-              { feature: "Your time per day", wa: "45+ min on messages", df: "~5 min to review" },
+              {
+                feature: "Online booking",
+                wa: { text: "Not available", negative: true },
+                df: { text: "24/7, instant confirmation", positive: true },
+              },
+              {
+                feature: "Appointment reminders",
+                wa: { text: "Typed manually each time", negative: true },
+                df: { text: "Sent automatically", positive: true },
+              },
+              {
+                feature: "No-show rate",
+                wa: { text: "~12% industry average", neutral: true },
+                df: { text: "~4% with reminders", positive: true },
+              },
+              {
+                feature: "Recall campaigns",
+                wa: { text: "Post-its and memory", negative: true },
+                df: { text: "Automated queue", positive: true },
+              },
+              {
+                feature: "Patient history",
+                wa: { text: "Scattered across chats", negative: true },
+                df: { text: "Unified profiles", positive: true },
+              },
+              {
+                feature: "Multi-outlet management",
+                wa: { text: "Separate group chats", negative: true },
+                df: { text: "One dashboard", positive: true },
+              },
+              {
+                feature: "Admin time per day",
+                wa: { text: "45+ minutes on messages", neutral: true },
+                df: { text: "Under 5 minutes", positive: true },
+              },
             ].map((row, i) => (
               <div
                 key={i}
-                className={`grid grid-cols-3 border-b border-gray-100 last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}`}
+                className="grid grid-cols-3 border-b border-gray-100 last:border-0 group"
               >
-                <div className="px-6 py-3.5 text-[13px] font-medium text-gray-700">{row.feature}</div>
-                <div className="px-6 py-3.5 text-center text-[13px] text-gray-500">{row.wa}</div>
-                <div className="px-6 py-3.5 text-center text-[13px] font-medium text-gray-900">{row.df}</div>
+                <div className="px-6 py-4 text-[13px] font-medium text-gray-700 flex items-center">
+                  {row.feature}
+                </div>
+                <div className="px-6 py-4 text-center border-l border-gray-100 flex items-center justify-center">
+                  <span className={`inline-flex items-center gap-1.5 text-[13px] ${row.wa.negative ? "text-gray-400" : "text-gray-500"}`}>
+                    {row.wa.negative && (
+                      <svg className="w-3.5 h-3.5 text-gray-300 flex-shrink-0" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
+                    )}
+                    {row.wa.text}
+                  </span>
+                </div>
+                <div className="px-6 py-4 text-center border-l border-gray-100 bg-emerald-50/40 flex items-center justify-center">
+                  <span className={`inline-flex items-center gap-1.5 text-[13px] font-medium ${row.df.positive ? "text-gray-800" : "text-gray-600"}`}>
+                    {row.df.positive && (
+                      <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" viewBox="0 0 14 11" fill="none">
+                        <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                    {row.df.text}
+                  </span>
+                </div>
               </div>
             ))}
           </motion.div>
@@ -917,40 +967,22 @@ export function LandingPage() {
 
 /* ─── Integration Section ─── */
 function IntegrationSection() {
-  const [open, setOpen] = useState(false);
-
-  const integrations = [
+  const options = [
     {
-      icon: "\uD83D\uDD17",
-      title: "No website?",
-      subtitle: "Use your DentaFlow page",
-      description: "Every clinic gets a hosted booking page at dentaflow-three.vercel.app/book/your-clinic. Share it on WhatsApp, Google My Business, or Instagram \u2014 no website needed.",
-      code: "dentaflow-three.vercel.app/book/shuang-dentistry",
-      codeLabel: "Your booking URL",
+      label: "No website",
+      description: "Hosted booking page included. Share the link anywhere.",
     },
     {
-      icon: "\uD83D\uDCBB",
-      title: "Any website",
-      subtitle: "One line of HTML",
-      description: "Paste a single script tag anywhere on your existing website. Works on any platform \u2014 no developer needed.",
-      code: '<script src="https://dentaflow-three.vercel.app/embed.js" data-dentaflow-clinic="your-clinic" data-dentaflow-float="true"></script>',
-      codeLabel: "Floating button embed",
+      label: "Any website",
+      description: "One script tag. Works on any platform, no developer needed.",
     },
     {
-      icon: "\uD83D\uDCD0",
-      title: "WordPress / Wix",
-      subtitle: "Inline form embed",
-      description: "Drop the booking form directly into any page. Paste the embed div and script into any HTML block or custom widget.",
-      code: '<div data-dentaflow="inline" data-clinic="your-clinic"></div>\n<script src="https://dentaflow-three.vercel.app/embed.js"></script>',
-      codeLabel: "Inline embed",
+      label: "WordPress / Wix",
+      description: "Drop the inline form into any page with a single HTML block.",
     },
     {
-      icon: "\uD83E\uDE84",
-      title: "Popup on any button",
-      subtitle: "Zero code change",
-      description: 'Add data-dentaflow="popup" to any existing button on your site. The booking modal opens on click \u2014 no redirect, no new page.',
-      code: '<button data-dentaflow="popup" data-clinic="your-clinic">Book Now</button>',
-      codeLabel: "Popup trigger",
+      label: "Existing button",
+      description: "Attach the booking popup to any button on your site.",
     },
   ];
 
@@ -961,58 +993,37 @@ function IntegrationSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          className="text-center mb-10"
         >
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-1">Flexible setup</p>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Works with your existing setup — or none at all.
-            </h2>
-            <p className="text-[14px] text-gray-500 mt-1">
-              Website, no website, WordPress, Wix — DentaFlow fits in everywhere.
-            </p>
-          </div>
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex-shrink-0 flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-[13px] font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            {open ? "Hide" : "See how"}
-            <span className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>↓</span>
-          </button>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Flexible setup</p>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Works however you work.
+          </h2>
+          <p className="text-[14px] text-gray-500 mt-2 max-w-lg mx-auto">
+            No website, existing site, or anything in between — DentaFlow installs in minutes.
+          </p>
         </motion.div>
 
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-8 grid sm:grid-cols-2 gap-4"
-          >
-            {integrations.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                className="rounded-xl border border-gray-200 bg-white p-5"
-              >
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl">{item.icon}</span>
-                  <div>
-                    <p className="text-[14px] font-semibold text-gray-900">{item.title}</p>
-                    <p className="text-[12px] text-emerald-600 font-medium">{item.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-[13px] text-gray-500 mb-3 leading-relaxed">{item.description}</p>
-                <div className="rounded-lg bg-gray-50 border border-gray-100 p-3">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">{item.codeLabel}</p>
-                  <code className="text-[11px] text-gray-700 break-all leading-relaxed">{item.code}</code>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {options.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.07 }}
+              className="rounded-xl border border-gray-200 bg-white p-5"
+            >
+              <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center mb-3">
+                <svg className="w-3 h-3 text-white" viewBox="0 0 12 10" fill="none">
+                  <path d="M1 5l3.5 3.5L11 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <p className="text-[13px] font-semibold text-gray-900 mb-1">{item.label}</p>
+              <p className="text-[12px] text-gray-500 leading-relaxed">{item.description}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
