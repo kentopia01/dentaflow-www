@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
 import { NumberTicker } from "./NumberTicker";
-import { GlowCard } from "./GlowCard";
 
 
 /* ─── Feature Row ─── */
@@ -52,7 +51,7 @@ function FeatureRow({
           {description}
         </p>
       </div>
-      <div className="flex-1 flex justify-center">{visual}</div>
+      <div className="flex-1 flex items-center justify-center min-h-[280px]">{visual}</div>
     </motion.div>
   );
 }
@@ -236,26 +235,32 @@ function MessagingAnimation() {
 
   return (
     <div className="w-full max-w-sm">
-      <div className="rounded-xl border border-gray-200 bg-[#ECE5DD] p-4 space-y-3 min-h-[200px]">
-        <p className="text-[11px] text-center text-gray-500 font-medium">
-          Shuang Dentistry · WhatsApp
-        </p>
-        {messages.slice(0, visible).map((msg, i) => (
-          <motion.div
-            key={`${cycle}-${i}`}
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] shadow-sm"
-          >
-            <p className="text-[12px] text-gray-800 leading-relaxed">
-              {msg.text}
-            </p>
-            <p className="text-[10px] text-gray-400 mt-1 text-right">
-              {i === 0 ? "Sent" : i === 1 ? "24h before" : "2h before"} ✓✓
-            </p>
-          </motion.div>
-        ))}
+      <div className="rounded-xl border border-gray-200 bg-[#ECE5DD] overflow-hidden" style={{ height: 220 }}>
+        {/* Header bar */}
+        <div className="bg-[#075E54] px-4 py-2.5 flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[11px] font-semibold">SD</div>
+          <div>
+            <p className="text-white text-[12px] font-semibold leading-tight">Shuang Dentistry</p>
+            <p className="text-[#B2DFDB] text-[10px]">WhatsApp Business</p>
+          </div>
+        </div>
+        {/* Chat area — fixed height, messages appear from top */}
+        <div className="p-3 space-y-2 h-[164px] overflow-hidden">
+          {messages.slice(0, visible).map((msg, i) => (
+            <motion.div
+              key={`${cycle}-${i}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="bg-[#DCF8C6] rounded-lg rounded-tl-none px-3 py-2 max-w-[88%] shadow-sm"
+            >
+              <p className="text-[11px] text-gray-800 leading-relaxed">{msg.text}</p>
+              <p className="text-[9px] text-gray-400 mt-0.5 text-right">
+                {i === 0 ? "Sent" : i === 1 ? "24h before" : "2h before"} ✓✓
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
       <p className="text-[11px] text-center text-gray-400 mt-2">
         Sent automatically. Zero manual work.
@@ -291,13 +296,13 @@ function RecallAnimation() {
   }, [cycle]);
 
   return (
-    <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white shadow-lg p-5">
+    <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white shadow-lg p-5" style={{ minWidth: 280 }}>
       <div className="flex items-center justify-between mb-4">
         <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
           Recall Queue
         </p>
-        <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-medium text-amber-700">
-          {count} DUE
+        <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-medium text-amber-700 tabular-nums" style={{ minWidth: 60, justifyContent: 'center' }}>
+          {String(count).padStart(3, '\u2007')} DUE
         </span>
       </div>
       <div className="space-y-2 mb-4">
@@ -306,7 +311,7 @@ function RecallAnimation() {
           "Ranjit Singh · Last visit 9 months ago",
           "Teo Siew Eng · Last visit 7 months ago",
         ].map((p) => (
-          <motion.div
+          <div
             key={p}
             className={`flex items-center gap-3 rounded-lg border p-2.5 transition-all duration-500 ${
               sent ? "border-emerald-200 bg-emerald-50" : "border-gray-100"
@@ -319,27 +324,25 @@ function RecallAnimation() {
             />
             <span className="text-[12px] text-gray-700 flex-1">{p}</span>
             {sent && (
-              <span className="text-[11px] text-emerald-600">Sent ✓</span>
+              <span className="text-[11px] text-emerald-600 shrink-0">Sent ✓</span>
             )}
-          </motion.div>
+          </div>
         ))}
-        <p className="text-[11px] text-gray-400 text-center">
+        <p className="text-[11px] text-gray-400 text-center tabular-nums">
           + {Math.max(0, count - 3)} more patients
         </p>
       </div>
-      <motion.button
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
+      {/* Fixed-size button so text change doesn't reflow */}
+      <button
         className={`w-full rounded-lg py-2.5 text-[13px] font-semibold transition-colors duration-300 ${
           sent
             ? "bg-emerald-100 text-emerald-700"
-            : "bg-emerald-600 text-white hover:bg-emerald-700"
+            : "bg-emerald-600 text-white"
         }`}
+        style={{ minHeight: 40 }}
       >
-        {sent
-          ? `✓ Sent to ${count} patients`
-          : `Send recall to ${count} patients →`}
-      </motion.button>
+        {sent ? `✓ Sent to ${count} patients` : `Send recall to ${count} patients →`}
+      </button>
     </div>
   );
 }
@@ -674,8 +677,8 @@ export function LandingPage() {
                   className="relative text-center"
                 >
                   {/* Step circle */}
-                  <div className="mx-auto mb-6 relative">
-                    <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center mx-auto relative z-10">
+                  <div className="mx-auto mb-6 relative w-16 h-16">
+                    <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center relative z-10">
                       {step.icon}
                     </div>
                     <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center z-20">
@@ -726,7 +729,7 @@ export function LandingPage() {
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>}
             title="Online booking that works without a website."
             description="Every clinic gets a hosted booking page, ready to share anywhere — Google Business Profile, SGDentistry, WhatsApp bio. Each outlet has its own URL. Patients book in under 90 seconds. No calls, no back-and-forth."
-            visual={<GlowCard><BookingAnimation /></GlowCard>}
+            visual={<BookingAnimation />}
             align="right"
           />
           <FeatureRow
@@ -734,7 +737,7 @@ export function LandingPage() {
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>}
             title="One record per patient. Always up to date."
             description="Patient profiles build automatically from every booking. Import your existing list from Dental4Windows or any CSV. Appointment history, WhatsApp status, and recall schedule — in one place, not scattered across chats."
-            visual={<GlowCard><PatientAnimation /></GlowCard>}
+            visual={<PatientAnimation />}
             align="left"
           />
           <FeatureRow
@@ -742,7 +745,7 @@ export function LandingPage() {
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>}
             title="The confirmation was sent before you looked up."
             description="The moment a patient books, a WhatsApp confirmation goes out. A 24-hour reminder follows. Then a 2-hour reminder. No-shows fall by 65%. Your receptionist sends zero manual messages."
-            visual={<GlowCard><MessagingAnimation /></GlowCard>}
+            visual={<MessagingAnimation />}
             align="right"
           />
           <FeatureRow
@@ -750,7 +753,7 @@ export function LandingPage() {
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
             title="Patients who haven't returned in 6 months are revenue waiting."
             description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
-            visual={<GlowCard><RecallAnimation /></GlowCard>}
+            visual={<RecallAnimation />}
             align="left"
           />
         </div>
@@ -942,22 +945,12 @@ export function LandingPage() {
       <FaqSection />
 
       {/* Waitlist form section */}
-      <section id="waitlist" className="py-24 px-6 bg-white">
+      <section id="waitlist" className="py-24 px-6 bg-gray-50">
         <div className="max-w-xl mx-auto">
-          {/* Gradient border card */}
-          <div className="relative rounded-2xl overflow-hidden p-[2px]">
-            {/* Spinning conic gradient border */}
-            <motion.div
-              style={{
-                background:
-                  "conic-gradient(from 0deg, #059669 0%, #d1fae5 25%, #ffffff 50%, #d1fae5 75%, #059669 100%)",
-              }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-[-50%] w-[200%] h-[200%]"
-            />
-            {/* Inner content */}
-            <div className="relative bg-white rounded-2xl p-8 text-center">
+          <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+            {/* Emerald accent top bar */}
+            <div className="h-1 bg-emerald-600" />
+            <div className="p-8 text-center">
               <h2 className="text-3xl font-bold text-gray-900">
                 Built in Singapore. Open worldwide.
               </h2>
@@ -1047,18 +1040,27 @@ function IntegrationSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="mb-10"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Flexible setup</p>
-          <h2 className="text-2xl font-bold text-gray-900">
-            Works however you work.
-          </h2>
-          <p className="text-[14px] text-gray-500 mt-2 max-w-lg mx-auto">
-            No website, existing site, or anything in between — DentaFlow installs in minutes.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Flexible setup</p>
+              <h2 className="text-2xl font-bold text-gray-900">
+                One line of code. Works everywhere.
+              </h2>
+              <p className="text-[14px] text-gray-500 mt-2 max-w-md">
+                Add a booking button to your existing site in 2 minutes — or share your DentaFlow link directly if you don&apos;t have one.
+              </p>
+            </div>
+            <a href="#waitlist" className="shrink-0">
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 h-10 rounded-lg text-[13px] font-semibold transition-colors whitespace-nowrap">
+                Get your booking link →
+              </button>
+            </a>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           {options.map((item, i) => (
             <motion.div
               key={i}
@@ -1066,11 +1068,11 @@ function IntegrationSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
-              className="rounded-xl border border-gray-200 bg-white p-5 hover:border-emerald-200 hover:shadow-sm transition-all"
+              className="rounded-xl border border-gray-100 bg-gray-50 p-4"
             >
-              <div className="mb-3">{item.icon}</div>
-              <p className="text-[13px] font-semibold text-gray-900 mb-1">{item.label}</p>
-              <p className="text-[12px] text-gray-500 leading-relaxed">{item.description}</p>
+              <div className="mb-2.5">{item.icon}</div>
+              <p className="text-[13px] font-semibold text-gray-900 mb-0.5">{item.label}</p>
+              <p className="text-[11px] text-gray-500 leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
         </div>
