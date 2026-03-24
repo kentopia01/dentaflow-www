@@ -79,57 +79,111 @@ async function sendWelcomeEmail(data: z.infer<typeof waitlistSchema>) {
   const firstName = data.name.split(" ")[0];
   const landingUrl = "https://dentaflow-www.vercel.app";
 
-  const html = `
-<div style="font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827;">
-  <div style="padding:32px 0 24px;">
-    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:32px;">
-      <div style="width:32px;height:32px;background:#059669;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-        <span style="color:#fff;font-weight:700;font-size:14px;">D</span>
-      </div>
-      <span style="font-size:16px;font-weight:600;color:#111827;">DentaFlow</span>
-    </div>
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#ffffff;font-family:-apple-system,Helvetica,Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ffffff;">
+  <tr><td align="center" style="padding:32px 16px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;">
 
-    <h1 style="font-size:24px;font-weight:700;margin:0 0 12px;line-height:1.3;">
-      You're on the list, ${firstName}.
-    </h1>
-    <p style="font-size:15px;color:#6b7280;margin:0 0 24px;line-height:1.6;">
-      Thanks for signing up for DentaFlow early access. We're onboarding Singapore dental clinics in batches and will reach out as soon as your slot opens — usually within 2 weeks.
-    </p>
+      <!-- Logo -->
+      <tr><td style="padding-bottom:32px;">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="width:32px;height:32px;background:#059669;border-radius:8px;text-align:center;vertical-align:middle;">
+              <span style="color:#ffffff;font-weight:700;font-size:15px;line-height:32px;">D</span>
+            </td>
+            <td style="padding-left:10px;font-size:16px;font-weight:600;color:#111827;vertical-align:middle;">DentaFlow</td>
+          </tr>
+        </table>
+      </td></tr>
 
-    <div style="background:#f9fafb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
-      <p style="font-size:13px;font-weight:600;color:#374151;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.05em;">What happens next</p>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-            <span style="color:#fff;font-size:11px;font-weight:700;">1</span>
-          </div>
-          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">We review your application and confirm your clinic details</p>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-            <span style="color:#fff;font-size:11px;font-weight:700;">2</span>
-          </div>
-          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">You get a personal setup call — we'll have your clinic live in under 10 minutes</p>
-        </div>
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <div style="width:20px;height:20px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-            <span style="color:#fff;font-size:11px;font-weight:700;">3</span>
-          </div>
-          <p style="font-size:14px;color:#374151;margin:0;line-height:1.5;">Patients can book online, reminders send automatically, recalls queue themselves</p>
-        </div>
-      </div>
-    </div>
+      <!-- Headline -->
+      <tr><td style="padding-bottom:12px;">
+        <h1 style="margin:0;font-size:26px;font-weight:700;color:#111827;line-height:1.3;">You're on the list, ${firstName}.</h1>
+      </td></tr>
 
-    <a href="${landingUrl}" style="display:inline-block;background:#059669;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;margin-bottom:32px;">
-      Learn more about DentaFlow →
-    </a>
+      <!-- Subtext -->
+      <tr><td style="padding-bottom:28px;">
+        <p style="margin:0;font-size:15px;color:#6b7280;line-height:1.7;">
+          Thanks for signing up for DentaFlow early access. We're onboarding dental clinics in batches and will reach out as soon as your slot opens — usually within 2 weeks.
+        </p>
+      </td></tr>
 
-    <hr style="border:none;border-top:1px solid #f3f4f6;margin:0 0 24px;">
-    <p style="font-size:13px;color:#9ca3af;margin:0;line-height:1.6;">
-      You signed up as <strong>${data.clinicName}</strong>. If you have any questions in the meantime, just reply to this email.
-    </p>
-  </div>
-</div>`;
+      <!-- Steps box -->
+      <tr><td style="background:#f9fafb;border-radius:10px;padding:20px 24px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 16px;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;">What happens next</p>
+
+        <!-- Step 1 -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;">
+          <tr>
+            <td width="28" valign="top" style="padding-top:1px;">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr><td style="width:22px;height:22px;background:#059669;border-radius:50%;text-align:center;vertical-align:middle;">
+                  <span style="color:#ffffff;font-size:11px;font-weight:700;line-height:22px;">1</span>
+                </td></tr>
+              </table>
+            </td>
+            <td style="padding-left:12px;font-size:14px;color:#374151;line-height:1.6;">We review your application and confirm your clinic details.</td>
+          </tr>
+        </table>
+
+        <!-- Step 2 -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;">
+          <tr>
+            <td width="28" valign="top" style="padding-top:1px;">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr><td style="width:22px;height:22px;background:#059669;border-radius:50%;text-align:center;vertical-align:middle;">
+                  <span style="color:#ffffff;font-size:11px;font-weight:700;line-height:22px;">2</span>
+                </td></tr>
+              </table>
+            </td>
+            <td style="padding-left:12px;font-size:14px;color:#374151;line-height:1.6;">You get a personal setup call — we'll have your clinic live in under 10 minutes.</td>
+          </tr>
+        </table>
+
+        <!-- Step 3 -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td width="28" valign="top" style="padding-top:1px;">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr><td style="width:22px;height:22px;background:#059669;border-radius:50%;text-align:center;vertical-align:middle;">
+                  <span style="color:#ffffff;font-size:11px;font-weight:700;line-height:22px;">3</span>
+                </td></tr>
+              </table>
+            </td>
+            <td style="padding-left:12px;font-size:14px;color:#374151;line-height:1.6;">Patients book online, reminders send automatically, recalls queue themselves.</td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- Spacer -->
+      <tr><td style="height:28px;"></td></tr>
+
+      <!-- CTA -->
+      <tr><td style="padding-bottom:32px;">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="background:#059669;border-radius:8px;">
+              <a href="${landingUrl}" style="display:inline-block;padding:13px 26px;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;">Learn more about DentaFlow &rarr;</a>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- Divider -->
+      <tr><td style="border-top:1px solid #f3f4f6;padding-top:20px;">
+        <p style="margin:0;font-size:13px;color:#9ca3af;line-height:1.6;">
+          You signed up as <strong style="color:#6b7280;">${data.clinicName}</strong>. Questions? Just reply to this email.
+        </p>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
 
   const message = [
     `From: DentaFlow <${from}>`,
