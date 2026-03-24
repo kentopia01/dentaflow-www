@@ -342,15 +342,15 @@ export function LandingPage() {
       {/* Nav — always light */}
       <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
+          {/* Logo — scrolls to top */}
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="flex items-center gap-2 cursor-pointer">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">D</span>
             </div>
             <span className="font-semibold text-[15px] text-gray-900">
               DentaFlow
             </span>
-          </div>
+          </a>
           {/* Nav links */}
           <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
@@ -907,11 +907,10 @@ export function LandingPage() {
       <section id="waitlist" className="py-24 px-6 bg-white">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-900">
-            We&apos;re onboarding Singapore clinics in batches.
+            Built in Singapore. Open worldwide.
           </h2>
           <p className="mt-4 text-gray-500 text-[15px]">
-            Leave your details. We&apos;ll reach out when your slot opens —
-            usually within 2 weeks.
+            We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out when your slot opens — usually within 2 weeks.
           </p>
           <WaitlistForm />
         </div>
@@ -932,7 +931,7 @@ export function LandingPage() {
             <a href="#waitlist" className="hover:text-gray-600 transition-colors">Early Access</a>
             <a href="https://dentaflow-three.vercel.app/sign-in" className="hover:text-gray-600 transition-colors">Clinic login →</a>
           </div>
-          <p className="text-[11px] text-gray-400">© 2026 DentaFlow · Built for Singapore</p>
+          <p className="text-[11px] text-gray-400">© 2026 DentaFlow · Built in Singapore</p>
         </div>
       </footer>
     </div>
