@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
-import { cn } from "@/lib/utils";
+
 
 /* ─── Feature Row ─── */
 function FeatureRow({
@@ -335,34 +335,24 @@ function RecallAnimation() {
 
 /* ─── Landing Page ─── */
 export function LandingPage() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
+  // scrolled state removed — nav is always light
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <nav className={cn(
-        "fixed top-0 w-full z-50 backdrop-blur-md border-b transition-all duration-300",
-        scrolled
-          ? "bg-white/95 border-gray-100"
-          : "bg-[#0a0f0c]/80 border-white/5"
-      )}>
+      {/* Nav — always light */}
+      <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">D</span>
             </div>
-            <span className={cn("font-semibold text-[15px] transition-colors", scrolled ? "text-gray-900" : "text-white")}>
+            <span className="font-semibold text-[15px] text-gray-900">
               DentaFlow
             </span>
           </div>
           {/* Nav links */}
-          <div className={cn("hidden md:flex items-center gap-6 text-[13px] transition-colors", scrolled ? "text-gray-600" : "text-gray-300")}>
+          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
             <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
@@ -376,21 +366,21 @@ export function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative pt-32 pb-0 px-6 overflow-hidden bg-[#0a0f0c]">
-        {/* Radial glow — single, centered, emerald. Sparse. */}
+      {/* Hero — full light */}
+      <section className="relative pt-28 pb-0 px-6 overflow-hidden bg-white">
+        {/* Subtle background grid */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage: "linear-gradient(#059669 1px, transparent 1px), linear-gradient(to right, #059669 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+          }}
+        />
+        {/* Soft radial highlight — light, centred */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(5,150,105,0.18) 0%, transparent 70%)",
-          }}
-        />
-
-        {/* Noise texture overlay — 4% opacity grain for depth */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+            background: "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(5,150,105,0.07) 0%, transparent 70%)",
           }}
         />
 
@@ -400,37 +390,25 @@ export function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Badge — gradient border, dark bg, pulsing dot */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-800/60 bg-emerald-950/40 px-4 py-1.5 text-[12px] text-emerald-300 mb-8 backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-[12px] text-emerald-700 font-medium mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Now accepting Singapore clinics · Early access
             </div>
 
-            {/* Headline — white, with ONE gradient accent on "booking page." */}
-            <h1 className="text-5xl md:text-6xl font-bold leading-[1.08] tracking-tight mb-6">
-              <span className="text-white">More than just a</span>
-              <br />
-              <span
-                className="text-white"
-                style={{
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundImage: "linear-gradient(90deg, #6ee7b7 0%, #34d399 50%, #10b981 100%)",
-                  backgroundClip: "text",
-                }}
-              >
-                booking page.
-              </span>
+            {/* Headline */}
+            <h1 className="text-5xl md:text-6xl font-bold leading-[1.08] tracking-tight mb-6 text-gray-900">
+              Stop managing dental<br />
+              <span className="text-emerald-600">bookings on WhatsApp.</span>
             </h1>
 
-            <p className="text-[17px] text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
-              DentaFlow gives Singapore dental clinics the tools to fill chairs,
-              reduce no-shows, and bring patients back — automatically.
+            <p className="text-[17px] text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
+              DentaFlow gives Singapore dental clinics online booking, automated reminders, and recall campaigns — all in one place.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="#waitlist">
-                <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-8 h-12 rounded-lg text-[15px] font-semibold active:scale-[0.98] transition-all duration-150">
+                <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-lg text-[15px] font-semibold active:scale-[0.98] transition-all duration-150">
                   Request early access →
                 </button>
               </a>
@@ -439,7 +417,7 @@ export function LandingPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="h-12 px-8 rounded-lg text-[15px] font-medium text-gray-300 border border-white/10 hover:border-white/20 hover:text-white bg-white/5 hover:bg-white/10 transition-all duration-150 backdrop-blur-sm">
+                <button className="h-12 px-8 rounded-lg text-[15px] font-medium text-gray-600 border border-gray-200 hover:border-gray-300 hover:text-gray-900 bg-white hover:bg-gray-50 transition-all duration-150">
                   See live demo ↗
                 </button>
               </a>
@@ -459,7 +437,7 @@ export function LandingPage() {
               initial={{ opacity: 0, y: 16, rotate: 3 }}
               animate={{ opacity: 1, y: 0, rotate: 3 }}
               transition={{ duration: 0.5, delay: 0.7 }}
-              className="absolute -top-5 -right-4 md:-right-10 z-10 bg-white rounded-xl shadow-2xl p-3 w-44 hidden sm:block"
+              className="absolute -top-5 -right-4 md:-right-10 z-10 bg-white rounded-xl border border-gray-100 shadow-xl shadow-gray-100/80 p-3 w-44 hidden sm:block"
             >
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide mb-1">Today</p>
               <p className="text-2xl font-bold text-gray-900 leading-none">12</p>
@@ -467,12 +445,12 @@ export function LandingPage() {
               <p className="text-[11px] text-emerald-600 mt-0.5 font-medium">↑ 3 vs yesterday</p>
             </motion.div>
 
-            {/* Floating card — bottom left — patient notification toast */}
+            {/* Floating card — bottom left */}
             <motion.div
               initial={{ opacity: 0, y: 16, rotate: -2 }}
               animate={{ opacity: 1, y: 0, rotate: -2 }}
               transition={{ duration: 0.5, delay: 0.9 }}
-              className="absolute -bottom-4 -left-4 md:-left-10 z-10 bg-white rounded-xl shadow-2xl p-3 w-52 hidden sm:block"
+              className="absolute -bottom-4 -left-4 md:-left-10 z-10 bg-white rounded-xl border border-gray-100 shadow-xl shadow-gray-100/80 p-3 w-52 hidden sm:block"
             >
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-[11px] font-semibold text-emerald-700">WJ</div>
@@ -487,17 +465,17 @@ export function LandingPage() {
               </div>
             </motion.div>
 
-            {/* Browser chrome + screenshot */}
-            <div className="rounded-xl border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.6)] overflow-hidden">
-              <div className="h-9 bg-[#1a1f1d] border-b border-white/5 flex items-center px-4 gap-2">
+            {/* Browser chrome — light */}
+            <div className="rounded-xl border border-gray-200 shadow-2xl shadow-gray-200/60 overflow-hidden">
+              <div className="h-9 bg-gray-50 border-b border-gray-200 flex items-center px-4 gap-2">
                 <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/70" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+                  <div className="w-3 h-3 rounded-full bg-red-400/60" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400/60" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-400/60" />
                 </div>
                 <div className="flex-1 mx-4">
-                  <div className="bg-white/5 rounded-md border border-white/10 h-5 flex items-center px-3">
-                    <span className="text-[11px] text-gray-500">
+                  <div className="bg-white rounded border border-gray-200 h-5 flex items-center px-3">
+                    <span className="text-[11px] text-gray-400">
                       dentaflow.com/book/shuang-dentistry
                     </span>
                   </div>
@@ -511,16 +489,12 @@ export function LandingPage() {
               />
             </div>
 
-            {/* Fade to dark at bottom — seamless into social proof section */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0a0f0c] to-transparent pointer-events-none" />
+            {/* Fade bottom into social proof */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
           </motion.div>
 
-          {/* Extra padding so fade works */}
-          <div className="h-20" />
+          <div className="h-16" />
         </div>
-
-        {/* Bottom fade from dark to white — seamless transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none" />
       </section>
 
       {/* Social proof bar */}
