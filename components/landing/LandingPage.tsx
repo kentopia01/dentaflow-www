@@ -11,12 +11,14 @@ import { GlowCard } from "./GlowCard";
 /* ─── Feature Row ─── */
 function FeatureRow({
   label,
+  icon,
   title,
   description,
   visual,
   align,
 }: {
   label: string;
+  icon?: React.ReactNode;
   title: string;
   description: string;
   visual: React.ReactNode;
@@ -33,10 +35,17 @@ function FeatureRow({
       } gap-12 items-center mb-24`}
     >
       <div className="flex-1">
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">
-          {label}
-        </span>
-        <h3 className="mt-2 text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
+        <div className="flex items-center gap-2 mb-2">
+          {icon && (
+            <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+              {icon}
+            </div>
+          )}
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">
+            {label}
+          </span>
+        </div>
+        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
           {title}
         </h3>
         <p className="mt-4 text-[15px] text-gray-500 leading-relaxed">
@@ -627,21 +636,33 @@ export function LandingPage() {
                   time: "2 min",
                   title: "Set up your clinic",
                   description: "Enter your clinic name, add your outlets, and select which treatments patients can book online. That\u2019s it \u2014 your profile is ready.",
-                  icon: "\uD83C\uDFE5",
+                  icon: (
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                    </svg>
+                  ),
                 },
                 {
                   step: "02",
                   time: "1 min",
                   title: "Share your booking link",
                   description: "Paste one line of code on your website \u2014 or skip the website entirely. Your DentaFlow link works everywhere: WhatsApp bio, Google My Business, Instagram.",
-                  icon: "\uD83D\uDD17",
+                  icon: (
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+                      <path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z"/>
+                    </svg>
+                  ),
                 },
                 {
                   step: "03",
                   time: "Ongoing",
                   title: "Run on autopilot",
                   description: "Patients book. Reminders send automatically. Recalls queue up. You manage from one dashboard \u2014 instead of 14 WhatsApp chats.",
-                  icon: "\u26A1",
+                  icon: (
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                    </svg>
+                  ),
                 },
               ].map((step, i) => (
                 <motion.div
@@ -655,7 +676,7 @@ export function LandingPage() {
                   {/* Step circle */}
                   <div className="mx-auto mb-6 relative">
                     <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center mx-auto relative z-10">
-                      <span className="text-2xl">{step.icon}</span>
+                      {step.icon}
                     </div>
                     <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center z-20">
                       {i + 1}
@@ -702,6 +723,7 @@ export function LandingPage() {
 
           <FeatureRow
             label="BOOKINGS"
+            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>}
             title="Online booking that works without a website."
             description="Every clinic gets a hosted booking page, ready to share anywhere — Google Business Profile, SGDentistry, WhatsApp bio. Each outlet has its own URL. Patients book in under 90 seconds. No calls, no back-and-forth."
             visual={<GlowCard><BookingAnimation /></GlowCard>}
@@ -709,6 +731,7 @@ export function LandingPage() {
           />
           <FeatureRow
             label="PATIENTS"
+            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>}
             title="One record per patient. Always up to date."
             description="Patient profiles build automatically from every booking. Import your existing list from Dental4Windows or any CSV. Appointment history, WhatsApp status, and recall schedule — in one place, not scattered across chats."
             visual={<GlowCard><PatientAnimation /></GlowCard>}
@@ -716,6 +739,7 @@ export function LandingPage() {
           />
           <FeatureRow
             label="MESSAGING"
+            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>}
             title="The confirmation was sent before you looked up."
             description="The moment a patient books, a WhatsApp confirmation goes out. A 24-hour reminder follows. Then a 2-hour reminder. No-shows fall by 65%. Your receptionist sends zero manual messages."
             visual={<GlowCard><MessagingAnimation /></GlowCard>}
@@ -723,6 +747,7 @@ export function LandingPage() {
           />
           <FeatureRow
             label="RECALL"
+            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
             title="Patients who haven't returned in 6 months are revenue waiting."
             description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
             visual={<GlowCard><RecallAnimation /></GlowCard>}
@@ -973,19 +998,46 @@ function IntegrationSection() {
     {
       label: "No website",
       description: "Hosted booking page included. Share the link anywhere.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18c0-.55-.45-1-1-1H6v-2c0-1.1.9-2 2-2h1c1.1 0 2-.9 2-2v-1H8c-.55 0-1-.45-1-1v-2.07C9.06 6.35 11.03 5.5 12 5.5c2.49 0 4.5 2.01 4.5 4.5 0 .69-.16 1.35-.43 1.93H14c-1.1 0-2 .9-2 2v.5c0 1.1.9 2 2 2h1.93A7.98 7.98 0 0 1 11 19.93z"/>
+        </svg>
+      ),
     },
     {
       label: "Any website",
       description: "One script tag. Works on any platform, no developer needed.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
+          <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+        </svg>
+      ),
     },
     {
       label: "WordPress / Wix",
       description: "Drop the inline form into any page with a single HTML block.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
+          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 1.542c1.473 0 2.852.398 4.037 1.087L4.629 16.037A8.434 8.434 0 0 1 3.542 12c0-4.666 3.792-8.458 8.458-8.458zm0 16.916a8.414 8.414 0 0 1-4.037-1.087l11.408-11.408A8.414 8.414 0 0 1 20.458 12c0 4.666-3.792 8.458-8.458 8.458z"/>
+        </svg>
+      ),
     },
     {
       label: "Existing button",
       description: "Attach the booking popup to any button on your site.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
+          <path d="M13 9h-2V7h2m0 10h-2v-6h2m-1-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/>
+        </svg>
+      ),
     },
+  ];
+
+  const platforms = [
+    { name: "WordPress", logo: "/icons/wordpress.svg" },
+    { name: "Wix", logo: "/icons/wix.svg" },
+    { name: "Squarespace", logo: "/icons/squarespace.svg" },
+    { name: "Webflow", logo: "/icons/webflow.svg" },
   ];
 
   return (
@@ -1006,7 +1058,7 @@ function IntegrationSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
           {options.map((item, i) => (
             <motion.div
               key={i}
@@ -1014,17 +1066,33 @@ function IntegrationSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
-              className="rounded-xl border border-gray-200 bg-white p-5"
+              className="rounded-xl border border-gray-200 bg-white p-5 hover:border-emerald-200 hover:shadow-sm transition-all"
             >
-              <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center mb-3">
-                <svg className="w-3 h-3 text-white" viewBox="0 0 12 10" fill="none">
-                  <path d="M1 5l3.5 3.5L11 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              <div className="mb-3">{item.icon}</div>
               <p className="text-[13px] font-semibold text-gray-900 mb-1">{item.label}</p>
               <p className="text-[12px] text-gray-500 leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
+        </div>
+
+        {/* Platform logo strip */}
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wider mr-2">Works with</span>
+          {platforms.map((p, i) => (
+            <motion.div
+              key={p.name}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06 }}
+              className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.logo} alt={p.name} className="w-4 h-4 opacity-50" />
+              <span className="text-[11px] text-gray-500 font-medium">{p.name}</span>
+            </motion.div>
+          ))}
+          <span className="text-[11px] text-gray-400 ml-1">+ any HTML site</span>
         </div>
       </div>
     </section>
