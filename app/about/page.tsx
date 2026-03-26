@@ -13,16 +13,14 @@ export default function AboutPage() {
       <SiteNav activePage="about" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-3xl mx-auto">
-          <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[12px] font-medium text-emerald-700 mb-6">
-            Our story
-          </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+      <section className="pt-28 pb-12 px-6 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Our story</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
             Built by people who know<br />
             <span className="text-emerald-600">Singapore dental.</span>
           </h1>
-          <p className="text-[17px] text-gray-500 leading-relaxed">
+          <p className="text-base text-gray-500 leading-relaxed max-w-xl">
             DentaFlow was born out of a simple observation: Singapore&apos;s dental clinics are run by excellent clinicians who are being held back by terrible tools. WhatsApp groups, Excel sheets, and phone tag — that&apos;s the operational reality for most practices in 2026.
           </p>
         </div>
@@ -30,7 +28,7 @@ export default function AboutPage() {
 
       {/* Mission section */}
       <section className="py-16 px-6 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-4">Our mission</p>
@@ -60,7 +58,7 @@ export default function AboutPage() {
 
       {/* SGDentistry ecosystem section */}
       <section className="py-20 px-6">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-4">Part of a bigger ecosystem</p>
           <div className="flex flex-col md:flex-row gap-12 items-start">
             <div className="flex-1">

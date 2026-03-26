@@ -19,8 +19,8 @@ export default function BlogIndexPage() {
       <section className="pt-28 pb-12 px-6 border-b border-gray-100">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Resources</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">The DentaFlow Blog</h1>
-          <p className="mt-3 text-[16px] text-gray-500 max-w-xl">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">The DentaFlow Blog</h1>
+          <p className="text-base text-gray-500 max-w-xl">
             Practice management guides, growth strategies, and insights for Singapore dental clinics.
           </p>
         </div>
