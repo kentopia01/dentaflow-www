@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
@@ -348,146 +348,241 @@ function RecallAnimation() {
   );
 }
 
-/* ─── Analytics Teaser ─── */
-function AnalyticsTeaser() {
+/* ─── Analytics Dashboard Animation ─── */
+function AnalyticsDashboardAnim() {
+  const [phase, setPhase] = useState(0); // 0=loading, 1=numbers, 2=sparkline, 3=deltas
+  const [cycle, setCycle] = useState(0);
+
+  useEffect(() => {
+    setPhase(0);
+    const timers = [
+      setTimeout(() => setPhase(1), 800),
+      setTimeout(() => setPhase(2), 2200),
+      setTimeout(() => setPhase(3), 3600),
+      setTimeout(() => { setPhase(0); setCycle(c => c + 1); }, 6500),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [cycle]);
+
+  const bars = [62, 78, 55, 90, 83, 71, 95]; // relative heights %
   const stats = [
-    { label: "Appointments this month", value: "147", delta: "+12 vs last month", positive: true },
-    { label: "No-show rate", value: "3.4%", delta: "\u2193 from 11.2%", positive: true },
-    { label: "WhatsApp messages sent", value: "312", delta: "This month", positive: null },
+    { label: "Appointments", value: "147", delta: "+12 this month", color: "emerald" },
+    { label: "No-show rate", value: "3.4%", delta: "↓ from 11.2%", color: "emerald" },
+    { label: "WhatsApp sent", value: "312", delta: "This month", color: "gray" },
   ];
 
   return (
-    <section className="py-16 px-6 bg-gray-50 border-y border-gray-100">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10"
-        >
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2 block">
-            Analytics
-          </span>
-          <h2 className="text-2xl font-bold text-gray-900">
-            Know your numbers without digging.
-          </h2>
-          <p className="mt-2 text-[14px] text-gray-500 max-w-md mx-auto">
-            Your clinic metrics update in real time — no spreadsheets, no manual counting.
-          </p>
-        </motion.div>
+    <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+      {/* Dashboard header */}
+      <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">This Month</p>
+        <span className="text-[10px] text-gray-400">March 2026</span>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
-              className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
-            >
-              <p className="text-[11px] font-medium text-gray-400 mb-2">{stat.label}</p>
-              <p className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
-              <p className={`text-[12px] font-medium ${stat.positive === true ? "text-emerald-600" : stat.positive === false ? "text-red-500" : "text-gray-400"}`}>
+      {/* Stat cards */}
+      <div className="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
+        {stats.map((stat, i) => (
+          <div key={stat.label} className="px-3 py-3">
+            <p className="text-[10px] text-gray-400 mb-1">{stat.label}</p>
+            {phase >= 1 ? (
+              <motion.p
+                key={`${cycle}-val-${i}`}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.12, duration: 0.3 }}
+                className="text-[15px] font-bold text-gray-900 leading-none"
+              >
+                {stat.value}
+              </motion.p>
+            ) : (
+              <div className="h-4 w-10 rounded bg-gray-100 animate-pulse mt-0.5" />
+            )}
+            {phase >= 3 ? (
+              <motion.p
+                key={`${cycle}-delta-${i}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.1, duration: 0.3 }}
+                className={`text-[10px] mt-0.5 font-medium ${stat.color === "emerald" ? "text-emerald-600" : "text-gray-400"}`}
+              >
                 {stat.delta}
-              </p>
-            </motion.div>
+              </motion.p>
+            ) : (
+              <div className="h-2.5 w-14 rounded bg-gray-50 mt-1" />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Sparkline chart */}
+      <div className="px-4 py-3">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-3">Weekly appointments</p>
+        <div className="flex items-end gap-1.5 h-16">
+          {bars.map((height, i) => (
+            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+              <motion.div
+                key={`${cycle}-bar-${i}`}
+                initial={{ height: 0 }}
+                animate={{ height: phase >= 2 ? `${height}%` : "0%" }}
+                transition={{ delay: phase >= 2 ? i * 0.06 : 0, duration: 0.4, ease: "easeOut" }}
+                className={`w-full rounded-t-sm ${i === 6 ? "bg-emerald-600" : "bg-emerald-200"}`}
+                style={{ minHeight: 2 }}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-between mt-1">
+          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(d => (
+            <span key={d} className="text-[9px] text-gray-300 flex-1 text-center">{d}</span>
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ─── Analytics Teaser ─── */
+function AnalyticsTeaser() {
+  return (
+    <section className="py-24 bg-white px-6 border-t border-gray-100">
+      <div className="max-w-6xl mx-auto">
+        <FeatureRow
+          label="ANALYTICS"
+          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>}
+          title="Know your numbers without digging."
+          description="Appointments booked, no-show rate, WhatsApp messages sent — your clinic metrics update in real time. No spreadsheets, no manual counting, no end-of-month surprises."
+          visual={<AnalyticsDashboardAnim />}
+          align="right"
+        />
+      </div>
     </section>
+  );
+}
+
+/* ─── Multi-Outlet Animation ─── */
+function MultiOutletAnim() {
+  const [visibleOutlets, setVisibleOutlets] = useState(0);
+  const [showNotif, setShowNotif] = useState(false);
+  const [flashIdx, setFlashIdx] = useState<number | null>(null);
+  const [tampinesCount, setTampinesCount] = useState(3);
+  const [cycle, setCycle] = useState(0);
+
+  useEffect(() => {
+    setVisibleOutlets(0);
+    setShowNotif(false);
+    setFlashIdx(null);
+    setTampinesCount(3);
+
+    const timers = [
+      setTimeout(() => setVisibleOutlets(1), 400),
+      setTimeout(() => setVisibleOutlets(2), 1200),
+      setTimeout(() => setVisibleOutlets(3), 2000),
+      setTimeout(() => setShowNotif(true), 3200),
+      setTimeout(() => {
+        setShowNotif(false);
+        setFlashIdx(2);
+        setTampinesCount(4);
+      }, 4800),
+      setTimeout(() => setFlashIdx(null), 5600),
+      setTimeout(() => setCycle(c => c + 1), 7200),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [cycle]);
+
+  const outlets = [
+    { name: "Yishun Branch", slug: "yishun", count: 8 },
+    { name: "Orchard Branch", slug: "orchard", count: 5 },
+    { name: "Tampines Branch", slug: "tampines", count: tampinesCount },
+  ];
+
+  return (
+    <div className="w-full max-w-sm relative" style={{ minHeight: 260 }}>
+      {/* Outlet list */}
+      <div className="space-y-2">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Your outlets</p>
+        {outlets.map((outlet, i) => (
+          visibleOutlets > i ? (
+            <motion.div
+              key={`${cycle}-${outlet.name}`}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className={`rounded-xl border p-4 flex items-center gap-3 transition-colors duration-300 ${
+                flashIdx === i
+                  ? "border-emerald-300 bg-emerald-50"
+                  : "border-gray-200 bg-white shadow-sm"
+              }`}
+            >
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] font-semibold text-gray-900">{outlet.name}</p>
+                <p className="text-[10px] text-gray-400 truncate">dentaflow.com/book/{outlet.slug}</p>
+              </div>
+              <div className="text-right flex-shrink-0">
+                <motion.p
+                  key={`${cycle}-count-${i}-${outlet.count}`}
+                  initial={{ scale: flashIdx === i ? 1.2 : 1 }}
+                  animate={{ scale: 1 }}
+                  className={`text-[14px] font-bold ${flashIdx === i ? "text-emerald-600" : "text-gray-900"}`}
+                >
+                  {outlet.count}
+                </motion.p>
+                <p className="text-[10px] text-gray-400">today</p>
+              </div>
+            </motion.div>
+          ) : (
+            <div key={outlet.name} className="h-[68px] rounded-xl border border-dashed border-gray-150 bg-gray-50/50" />
+          )
+        ))}
+      </div>
+
+      {/* Floating notification */}
+      <AnimatePresence>
+        {showNotif && (
+          <motion.div
+            initial={{ opacity: 0, x: 24, y: 0 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 24 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="absolute -right-2 top-16 bg-white rounded-xl border border-gray-100 shadow-xl p-3 w-52 z-10"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-emerald-700">WJ</div>
+              <div>
+                <p className="text-[11px] font-semibold text-gray-900 leading-tight">Wong Wei Jie booked</p>
+                <p className="text-[10px] text-gray-400 mt-0.5">Scaling · Tampines · 2:00 PM</p>
+              </div>
+            </div>
+            <div className="mt-2 flex items-center gap-1 text-[10px] text-gray-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+              WhatsApp confirmation sent
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
 /* ─── Multi-Outlet Section ─── */
 function MultiOutletSection() {
   return (
-    <section className="py-20 px-6 bg-white border-t border-gray-100">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row gap-12 items-center"
-        >
-          {/* Left — copy */}
-          <div className="flex-1">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600 mb-3 block">
-              Multi-outlet
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug mb-4">
-              Running more than one outlet?<br />
-              One dashboard. All locations.
-            </h2>
-            <p className="text-[15px] text-gray-500 leading-relaxed mb-6">
-              Each outlet gets its own booking link, treatment menu, and operating hours. Patients always book the right location. You see everything from one place — no separate logins, no switching between apps.
-            </p>
-            <div className="space-y-3">
-              {[
-                "Per-outlet booking URLs (e.g. /book/yishun, /book/orchard)",
-                "Shared patient records across all outlets",
-                "Outlet-level treatment menus \u2014 enable or disable per location",
-                "Today view filters by outlet with one tap",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-2.5">
-                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
-                    <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <span className="text-[13px] text-gray-600">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — visual */}
-          <div className="flex-1 flex items-center justify-center">
-            <MultiOutletVisual />
-          </div>
-        </motion.div>
+    <section className="py-24 bg-gray-50 px-6 border-t border-gray-100">
+      <div className="max-w-6xl mx-auto">
+        <FeatureRow
+          label="MULTI-OUTLET"
+          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>}
+          title="Running more than one outlet? One dashboard. All locations."
+          description="Each outlet gets its own booking link, treatment menu, and operating hours. Patients always book the right location. You see everything from one place — no separate logins, no switching between apps."
+          visual={<MultiOutletAnim />}
+          align="left"
+        />
       </div>
     </section>
-  );
-}
-
-function MultiOutletVisual() {
-  const outlets = [
-    { name: "Yishun Branch", slug: "yishun", appts: 8, status: "active" },
-    { name: "Orchard Branch", slug: "orchard", appts: 5, status: "active" },
-    { name: "Tampines Branch", slug: "tampines", appts: 3, status: "active" },
-  ];
-
-  return (
-    <div className="w-full max-w-sm space-y-2">
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Your outlets</p>
-      {outlets.map((outlet, i) => (
-        <motion.div
-          key={outlet.name}
-          initial={{ opacity: 0, x: 16 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.1, duration: 0.4 }}
-          className="rounded-xl border border-gray-200 bg-white p-4 flex items-center gap-4 shadow-sm"
-        >
-          <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-emerald-600">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-            </svg>
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-semibold text-gray-900">{outlet.name}</p>
-            <p className="text-[11px] text-gray-400 truncate">dentaflow.com/book/{outlet.slug}</p>
-          </div>
-          <div className="text-right flex-shrink-0">
-            <p className="text-[13px] font-semibold text-gray-900">{outlet.appts}</p>
-            <p className="text-[10px] text-gray-400">today</p>
-          </div>
-        </motion.div>
-      ))}
-      <div className="rounded-xl border border-dashed border-gray-200 p-4 text-center">
-        <p className="text-[12px] text-gray-400">+ Add outlet</p>
-      </div>
-    </div>
   );
 }
 
