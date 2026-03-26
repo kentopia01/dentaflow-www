@@ -30,14 +30,13 @@ function FeatureRow({
   align: "left" | "right";
   bg?: "white" | "gray" | "dark";
 }) {
-  const bgClass = "bg-white";
   const labelColor = "text-emerald-600";
   const titleColor = "text-gray-900";
   const descColor = "text-gray-500";
 
   return (
-    <div className={`${bgClass} px-6 py-20 border-b border-gray-100`}>
-      <div className="max-w-6xl mx-auto">
+    <div className="py-20 border-b border-gray-200/60">
+      <div className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -936,9 +935,9 @@ export function LandingPage() {
 
       {/* Integration section moved — now part of unified SetupSection after Pricing */}
 
-      {/* Feature pillars — each row is its own full-width section */}
-      <div id="features">
-        <div className="text-center py-16 px-6 bg-gray-50 border-b border-gray-100">
+      {/* Feature pillars — all in one dot-grid section */}
+      <section id="features" className="bg-gray-50 dot-grid">
+        <div className="text-center py-16 px-6 border-b border-gray-200/60">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Features</p>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -1019,13 +1018,12 @@ export function LandingPage() {
           align="left"
           bg="white"
         />
-      </div>
+        {/* Analytics teaser */}
+        <AnalyticsTeaser />
 
-      {/* Analytics teaser */}
-      <AnalyticsTeaser />
-
-      {/* Multi-outlet callout */}
-      <MultiOutletSection />
+        {/* Multi-outlet callout */}
+        <MultiOutletSection />
+      </section>
 
       {/* Mid-page CTA band */}
       <section className="py-16 px-6 bg-emerald-600">
