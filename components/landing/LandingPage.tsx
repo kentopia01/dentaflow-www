@@ -981,25 +981,10 @@ export function LandingPage() {
             </div>
           </div>
 
-          {/* CTA under steps */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-14 text-center"
-          >
-            <a href="#waitlist">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-base active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
-                Get early access →
-              </button>
-            </a>
-          </motion.div>
         </div>
       </section>
 
-      {/* Integration section — moved here after How it works */}
-      <IntegrationSection />
+      {/* Integration section moved — now part of unified SetupSection after Pricing */}
 
       {/* Feature pillars */}
       <section id="features" className="py-24 bg-gray-50 px-6 dot-grid">
@@ -1248,6 +1233,9 @@ export function LandingPage() {
 
       {/* Pricing */}
       <PricingSection />
+
+      {/* Setup section — How it works + Integration unified */}
+      <SetupSection />
 
       {/* Numbers section */}
       <section className="py-24 bg-emerald-600 px-6">
@@ -1542,6 +1530,198 @@ function PricingSection() {
         <p className="text-center text-xs text-gray-400 mt-8">
           Pricing is per outlet per month. All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
         </p>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Unified Setup Section — How it works + Integration ─── */
+function SetupSection() {
+  const steps = [
+    {
+      time: "2 min",
+      title: "Set up your clinic",
+      description: "Enter your clinic name, add your outlets, and select which treatments patients can book online. Your profile is ready.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+          <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+        </svg>
+      ),
+    },
+    {
+      time: "1 min",
+      title: "Share your booking link",
+      description: "Paste one line of code on your site — or skip the website. Your DentaFlow link works everywhere: WhatsApp bio, Google Business, Instagram.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+          <path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z"/>
+        </svg>
+      ),
+    },
+    {
+      time: "Ongoing",
+      title: "Run on autopilot",
+      description: "Patients book. Reminders fire. Recalls queue up. You manage everything from one dashboard instead of 14 WhatsApp chats.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+        </svg>
+      ),
+    },
+  ];
+
+  const platforms = [
+    { name: "WordPress", logo: "/icons/wordpress.svg" },
+    { name: "Wix", logo: "/icons/wix.svg" },
+    { name: "Squarespace", logo: "/icons/squarespace.svg" },
+    { name: "Webflow", logo: "/icons/webflow.svg" },
+  ];
+
+  const embedOptions = [
+    {
+      label: "No website",
+      description: "Hosted booking page included. Share the link anywhere.",
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18c0-.55-.45-1-1-1H6v-2c0-1.1.9-2 2-2h1c1.1 0 2-.9 2-2v-1H8c-.55 0-1-.45-1-1v-2.07C9.06 6.35 11.03 5.5 12 5.5c2.49 0 4.5 2.01 4.5 4.5 0 .69-.16 1.35-.43 1.93H14c-1.1 0-2 .9-2 2v.5c0 1.1.9 2 2 2h1.93A7.98 7.98 0 0 1 11 19.93z"/></svg>,
+    },
+    {
+      label: "Any website",
+      description: "One script tag. Works on any platform.",
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>,
+    },
+    {
+      label: "WordPress / Wix",
+      description: "Drop the inline form in with a single HTML block.",
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 1.542c1.473 0 2.852.398 4.037 1.087L4.629 16.037A8.434 8.434 0 0 1 3.542 12c0-4.666 3.792-8.458 8.458-8.458zm0 16.916a8.414 8.414 0 0 1-4.037-1.087l11.408-11.408A8.414 8.414 0 0 1 20.458 12c0 4.666-3.792 8.458-8.458 8.458z"/></svg>,
+    },
+    {
+      label: "Existing button",
+      description: "Attach the booking popup to any button on your site.",
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600"><path d="M13 9h-2V7h2m0 10h-2v-6h2m-1-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/></svg>,
+    },
+  ];
+
+  return (
+    <section id="how-it-works" className="py-24 px-6 bg-gray-50 border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
+
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Get started</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            From zero to live in under 10 minutes.
+          </h2>
+          <p className="mt-4 text-base text-gray-500 max-w-xl mx-auto">
+            No IT team. No training week. No migration project. Most clinics are live before lunch.
+          </p>
+        </motion.div>
+
+        {/* Steps */}
+        <div className="relative mb-16">
+          <div className="hidden md:block absolute top-8 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-emerald-100" />
+          <div className="grid md:grid-cols-3 gap-8">
+            {steps.map((step, i) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.15 }}
+                className="relative text-center"
+              >
+                <div className="mx-auto mb-6 relative w-16 h-16">
+                  <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center relative z-10">
+                    {step.icon}
+                  </div>
+                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center z-20">
+                    {i + 1}
+                  </span>
+                </div>
+                <span className="inline-block mb-3 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-0.5">
+                  {step.time}
+                </span>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-[260px] mx-auto">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider between steps and embed options */}
+        <div className="border-t border-gray-200 mb-14" />
+
+        {/* Embed / integration options */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-8"
+        >
+          <div className="text-center mb-8">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Flexible setup</p>
+            <h3 className="text-2xl font-bold text-gray-900">One line of code. Works everywhere.</h3>
+            <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">
+              Add a booking button to your existing site in 2 minutes — or share your DentaFlow link directly.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            {embedOptions.map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+                className="rounded-xl border border-gray-200 bg-white p-4"
+              >
+                <div className="mb-2.5">{item.icon}</div>
+                <p className="text-sm font-semibold text-gray-900 mb-0.5">{item.label}</p>
+                <p className="text-[11px] text-gray-500 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Platform logos */}
+          <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
+            <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wider mr-2">Works with</span>
+            {platforms.map((p, i) => (
+              <motion.div
+                key={p.name}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.logo} alt={p.name} className="w-4 h-4 opacity-50" />
+                <span className="text-[11px] text-gray-500 font-medium">{p.name}</span>
+              </motion.div>
+            ))}
+            <span className="text-[11px] text-gray-400 ml-1">+ any HTML site</span>
+          </div>
+        </motion.div>
+
+        {/* CTA at the bottom of the unified section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <a href="#waitlist">
+            <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-base active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
+              Get early access →
+            </button>
+          </a>
+          <p className="text-sm text-gray-400 mt-3">No credit card. No commitment.</p>
+        </motion.div>
+
       </div>
     </section>
   );
