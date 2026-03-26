@@ -348,6 +348,149 @@ function RecallAnimation() {
   );
 }
 
+/* ─── Analytics Teaser ─── */
+function AnalyticsTeaser() {
+  const stats = [
+    { label: "Appointments this month", value: "147", delta: "+12 vs last month", positive: true },
+    { label: "No-show rate", value: "3.4%", delta: "\u2193 from 11.2%", positive: true },
+    { label: "WhatsApp messages sent", value: "312", delta: "This month", positive: null },
+  ];
+
+  return (
+    <section className="py-16 px-6 bg-gray-50 border-y border-gray-100">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-10"
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2 block">
+            Analytics
+          </span>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Know your numbers without digging.
+          </h2>
+          <p className="mt-2 text-[14px] text-gray-500 max-w-md mx-auto">
+            Your clinic metrics update in real time — no spreadsheets, no manual counting.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+            >
+              <p className="text-[11px] font-medium text-gray-400 mb-2">{stat.label}</p>
+              <p className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
+              <p className={`text-[12px] font-medium ${stat.positive === true ? "text-emerald-600" : stat.positive === false ? "text-red-500" : "text-gray-400"}`}>
+                {stat.delta}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Multi-Outlet Section ─── */
+function MultiOutletSection() {
+  return (
+    <section className="py-20 px-6 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row gap-12 items-center"
+        >
+          {/* Left — copy */}
+          <div className="flex-1">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600 mb-3 block">
+              Multi-outlet
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug mb-4">
+              Running more than one outlet?<br />
+              One dashboard. All locations.
+            </h2>
+            <p className="text-[15px] text-gray-500 leading-relaxed mb-6">
+              Each outlet gets its own booking link, treatment menu, and operating hours. Patients always book the right location. You see everything from one place — no separate logins, no switching between apps.
+            </p>
+            <div className="space-y-3">
+              {[
+                "Per-outlet booking URLs (e.g. /book/yishun, /book/orchard)",
+                "Shared patient records across all outlets",
+                "Outlet-level treatment menus \u2014 enable or disable per location",
+                "Today view filters by outlet with one tap",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-2.5">
+                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
+                    <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-[13px] text-gray-600">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — visual */}
+          <div className="flex-1 flex items-center justify-center">
+            <MultiOutletVisual />
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function MultiOutletVisual() {
+  const outlets = [
+    { name: "Yishun Branch", slug: "yishun", appts: 8, status: "active" },
+    { name: "Orchard Branch", slug: "orchard", appts: 5, status: "active" },
+    { name: "Tampines Branch", slug: "tampines", appts: 3, status: "active" },
+  ];
+
+  return (
+    <div className="w-full max-w-sm space-y-2">
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-3">Your outlets</p>
+      {outlets.map((outlet, i) => (
+        <motion.div
+          key={outlet.name}
+          initial={{ opacity: 0, x: 16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.1, duration: 0.4 }}
+          className="rounded-xl border border-gray-200 bg-white p-4 flex items-center gap-4 shadow-sm"
+        >
+          <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-emerald-600">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[13px] font-semibold text-gray-900">{outlet.name}</p>
+            <p className="text-[11px] text-gray-400 truncate">dentaflow.com/book/{outlet.slug}</p>
+          </div>
+          <div className="text-right flex-shrink-0">
+            <p className="text-[13px] font-semibold text-gray-900">{outlet.appts}</p>
+            <p className="text-[10px] text-gray-400">today</p>
+          </div>
+        </motion.div>
+      ))}
+      <div className="rounded-xl border border-dashed border-gray-200 p-4 text-center">
+        <p className="text-[12px] text-gray-400">+ Add outlet</p>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Landing Page ─── */
 export function LandingPage() {
   // scrolled state removed — nav is always light
@@ -807,6 +950,12 @@ export function LandingPage() {
           />
         </div>
       </section>
+
+      {/* Analytics teaser */}
+      <AnalyticsTeaser />
+
+      {/* Multi-outlet callout */}
+      <MultiOutletSection />
 
       {/* Integration section — expandable */}
       <IntegrationSection />
@@ -1298,6 +1447,10 @@ function FaqSection() {
     {
       q: "Do my patients need to download an app?",
       a: "No. Patients book through a regular web page in their browser \u2014 no app, no account, no friction. They pick a time, enter their name and mobile, and they\u2019re done. Most patients complete the booking in under 90 seconds.",
+    },
+    {
+      q: "What happens to my existing patients?",
+      a: "You can import your full patient list before you go live. DentaFlow accepts CSV exports from Dental4Windows and any spreadsheet with Name and Mobile columns. Once imported, recall reminders activate automatically for patients with a past visit date \u2014 so your existing base is working for you from day one.",
     },
     {
       q: "Do I need a website to use DentaFlow?",
