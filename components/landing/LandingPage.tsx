@@ -1132,12 +1132,12 @@ export function LandingPage() {
       <section className="py-16 px-6 bg-emerald-600">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-white text-xl font-semibold">Ready to stop managing bookings on WhatsApp?</p>
-            <p className="text-emerald-100 text-sm mt-1">Join 40+ Singapore clinics on the early access waitlist.</p>
+            <p className="text-white text-xl font-semibold">Your clinic could be running on autopilot.</p>
+            <p className="text-emerald-100 text-sm mt-1">Starter plan is free. No credit card, no commitment.</p>
           </div>
           <a href="#waitlist">
             <button className="flex-shrink-0 bg-white hover:bg-gray-50 text-emerald-700 font-semibold px-8 h-12 rounded-lg text-base active:scale-[0.98] transition-all duration-150 whitespace-nowrap">
-              Get early access →
+              Start for free →
             </button>
           </a>
         </div>
@@ -1327,7 +1327,7 @@ export function LandingPage() {
                 Built in Singapore. Open worldwide.
               </h2>
               <p className="mt-4 text-gray-500 text-base">
-                We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out within 3–5 business days.
+                Leave your details and we&apos;ll be in touch within 3–5 business days to get you set up.
               </p>
               <WaitlistForm />
             </div>
@@ -1565,7 +1565,7 @@ function PricingSection() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-8">
-          Pricing is per outlet per month. All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
+          Pricing is per outlet per month. All plans include: PDPA-compliant data storage · Singapore-based servers · Cancel anytime
         </p>
       </div>
     </section>
@@ -1898,8 +1898,8 @@ function FaqSection() {
       a: "No. Every clinic gets a hosted booking page at dentaflow.com/book/your-clinic. You can share this link directly in your WhatsApp bio, Google My Business listing, Instagram profile, or anywhere else. If you do have a website, we have a one-line embed that drops a floating booking button on every page.",
     },
     {
-      q: "What happens to my existing clinic WhatsApp number?",
-      a: "Nothing changes for your personal clinic WhatsApp. DentaFlow uses a dedicated clinic number (via WhatsApp Business API) for automated messages \u2014 booking confirmations, reminders, and recalls. Patients can reply to those messages and you\u2019ll see the thread in DentaFlow. Your personal number stays separate.",
+      q: "How does WhatsApp automation work?",
+      a: "DentaFlow uses a dedicated clinic number via WhatsApp Business API — separate from your personal or existing clinic WhatsApp. Automated confirmations and reminders are sent from this number, and patients can reply directly. You see all conversations in the DentaFlow inbox. WhatsApp automation is launching in the next update — you can configure it now and it activates automatically when it goes live.",
     },
     {
       q: "Is DentaFlow compliant with PDPA?",
