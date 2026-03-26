@@ -940,7 +940,7 @@ export function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="py-24 px-6 bg-white section-glow-top">
+      <section className="py-24 px-6 bg-white section-glow-top">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1087,12 +1087,12 @@ export function LandingPage() {
         <FeatureRow
           number="03"
           label="WHATSAPP AUTOMATION"
-          icon={<img src="/icons/whatsapp.svg" alt="WhatsApp" className="w-4 h-4" />}
+          icon={<svg viewBox="0 0 24 24" fill="#25D366" className="w-4 h-4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>}
           title="WhatsApp automations built in. Zero setup."
           description="The moment a patient books, a confirmation goes out. Your receptionist sends zero manual messages."
           bullets={[
-            { icon: <img src="/icons/whatsapp.svg" alt="" className="w-4 h-4" />, text: "Booking confirmation sent instantly — before the patient closes the tab" },
-            { icon: <img src="/icons/whatsapp.svg" alt="" className="w-4 h-4" />, text: "24-hour and 2-hour reminders fire automatically — no staff involvement" },
+            { icon: <svg viewBox="0 0 24 24" fill="#25D366" className="w-4 h-4 flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>, text: "Booking confirmation sent instantly — before the patient closes the tab" },
+            { icon: <svg viewBox="0 0 24 24" fill="#25D366" className="w-4 h-4 flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>, text: "24-hour and 2-hour reminders fire automatically — no staff involvement" },
             { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-400"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "No-shows drop by up to 65% — clinics report this within the first month" },
           ]}
           visual={
@@ -1759,122 +1759,6 @@ function SetupSection() {
           <p className="text-sm text-gray-400 mt-3">No credit card. No commitment.</p>
         </motion.div>
 
-      </div>
-    </section>
-  );
-}
-
-/* ─── Integration Section ─── */
-function IntegrationSection() {
-  const options = [
-    {
-      label: "No website",
-      description: "Hosted booking page included. Share the link anywhere.",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
-          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18c0-.55-.45-1-1-1H6v-2c0-1.1.9-2 2-2h1c1.1 0 2-.9 2-2v-1H8c-.55 0-1-.45-1-1v-2.07C9.06 6.35 11.03 5.5 12 5.5c2.49 0 4.5 2.01 4.5 4.5 0 .69-.16 1.35-.43 1.93H14c-1.1 0-2 .9-2 2v.5c0 1.1.9 2 2 2h1.93A7.98 7.98 0 0 1 11 19.93z"/>
-        </svg>
-      ),
-    },
-    {
-      label: "Any website",
-      description: "One script tag. Works on any platform, no developer needed.",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
-          <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-        </svg>
-      ),
-    },
-    {
-      label: "WordPress / Wix",
-      description: "Drop the inline form into any page with a single HTML block.",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
-          <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 1.542c1.473 0 2.852.398 4.037 1.087L4.629 16.037A8.434 8.434 0 0 1 3.542 12c0-4.666 3.792-8.458 8.458-8.458zm0 16.916a8.414 8.414 0 0 1-4.037-1.087l11.408-11.408A8.414 8.414 0 0 1 20.458 12c0 4.666-3.792 8.458-8.458 8.458z"/>
-        </svg>
-      ),
-    },
-    {
-      label: "Existing button",
-      description: "Attach the booking popup to any button on your site.",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-emerald-600">
-          <path d="M13 9h-2V7h2m0 10h-2v-6h2m-1-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/>
-        </svg>
-      ),
-    },
-  ];
-
-  const platforms = [
-    { name: "WordPress", logo: "/icons/wordpress.svg" },
-    { name: "Wix", logo: "/icons/wix.svg" },
-    { name: "Squarespace", logo: "/icons/squarespace.svg" },
-    { name: "Webflow", logo: "/icons/webflow.svg" },
-  ];
-
-  return (
-    <section className="py-16 px-6 bg-white border-t border-gray-100">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-10"
-        >
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-2">Flexible setup</p>
-              <h2 className="text-2xl font-bold text-gray-900">
-                One line of code. Works everywhere.
-              </h2>
-              <p className="text-sm text-gray-500 mt-2 max-w-md">
-                Add a booking button to your existing site in 2 minutes — or share your DentaFlow link directly if you don&apos;t have one.
-              </p>
-            </div>
-            <a href="#waitlist" className="shrink-0">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 h-10 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap">
-                Get early access →
-              </button>
-            </a>
-          </div>
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          {options.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.07 }}
-              className="rounded-xl border border-gray-100 bg-gray-50 p-4"
-            >
-              <div className="mb-2.5">{item.icon}</div>
-              <p className="text-sm font-semibold text-gray-900 mb-0.5">{item.label}</p>
-              <p className="text-[11px] text-gray-500 leading-relaxed">{item.description}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Platform logo strip */}
-        <div className="flex items-center justify-center gap-2 flex-wrap">
-          <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wider mr-2">Works with</span>
-          {platforms.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={p.logo} alt={p.name} className="w-4 h-4 opacity-50" />
-              <span className="text-[11px] text-gray-500 font-medium">{p.name}</span>
-            </motion.div>
-          ))}
-          <span className="text-[11px] text-gray-400 ml-1">+ any HTML site</span>
-        </div>
       </div>
     </section>
   );
