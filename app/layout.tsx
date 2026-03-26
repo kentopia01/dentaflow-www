@@ -16,6 +16,32 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DentaFlow — Dental practice management for Singapore clinics",
   description: "Online booking, WhatsApp reminders, and patient recall — built for Singapore dental clinics. Replace your WhatsApp booking chaos with a platform that runs itself.",
+  metadataBase: new URL("https://dentaflow-www.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "DentaFlow — Dental practice management for Singapore clinics",
+    description: "Online booking, WhatsApp reminders, and patient recall — built for Singapore dental clinics.",
+    url: "https://dentaflow-www.vercel.app",
+    siteName: "DentaFlow",
+    type: "website",
+    locale: "en_SG",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DentaFlow — Stop managing bookings on WhatsApp",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DentaFlow — Dental practice management for Singapore clinics",
+    description: "Online booking, WhatsApp reminders, and patient recall — built for Singapore dental clinics.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({

@@ -149,7 +149,7 @@ export function WaitlistForm() {
         className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white h-12 text-[15px] font-semibold transition-all duration-150 disabled:opacity-60 flex items-center justify-center gap-2"
       >
         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-        Request early access →
+        Get early access →
       </button>
       <p className="text-[11px] text-gray-400 text-center">
         No credit card. No commitment. We&apos;ll be in touch within 2 weeks.

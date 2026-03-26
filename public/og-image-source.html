@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    font-family: -apple-system, 'Inter', sans-serif;
+    background: #ffffff;
+  }
+
+  /* Left emerald accent bar */
+  .accent-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: #059669;
+  }
+
+  /* Subtle grid background */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(5,150,105,0.04) 1px, transparent 1px),
+      linear-gradient(to right, rgba(5,150,105,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Radial glow top-right */
+  .glow {
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(5,150,105,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    display: flex;
+    height: 100%;
+    padding: 0 72px 0 80px;
+    align-items: center;
+    gap: 64px;
+  }
+
+  /* LEFT SIDE */
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: #059669;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 18px; font-weight: 800;
+  }
+
+  .logo-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.3px;
+  }
+
+  .headline {
+    font-size: 52px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+  }
+
+  .headline .accent {
+    color: #059669;
+  }
+
+  .sub {
+    font-size: 20px;
+    color: #6b7280;
+    line-height: 1.5;
+    max-width: 420px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1.5px solid #d1fae5;
+    background: #f0fdf4;
+    font-size: 13px;
+    font-weight: 600;
+    color: #065f46;
+  }
+
+  .tag-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #059669;
+  }
+
+  /* RIGHT SIDE — mini product UI */
+  .right {
+    width: 380px;
+    flex-shrink: 0;
+  }
+
+  .card {
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .card-header {
+    background: #f9fafb;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: rgba(239,68,68,0.5); }
+  .dot-a { background: rgba(251,191,36,0.5); }
+  .dot-g { background: rgba(34,197,94,0.5); }
+
+  .url-bar {
+    flex: 1;
+    margin: 0 8px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  .booking-form {
+    padding: 16px;
+  }
+
+  .form-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 10px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .form-field {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .form-field.active {
+    border-color: #059669;
+    background: #f0fdf4;
+  }
+
+  .field-label { font-size: 10px; color: #9ca3af; }
+  .field-value { font-size: 13px; font-weight: 600; color: #111827; margin-top: 2px; }
+  .field-placeholder { font-size: 13px; color: #d1d5db; margin-top: 2px; }
+
+  .confirm-btn {
+    width: 100%;
+    background: #059669;
+    color: white;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Floating badge top-right of card */
+  .float-badge {
+    position: absolute;
+    top: -12px;
+    right: -16px;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #059669;
+  }
+
+  .badge-text { font-size: 12px; font-weight: 600; color: #111827; }
+  .badge-sub { font-size: 10px; color: #6b7280; margin-top: 1px; }
+
+  .right-wrapper {
+    position: relative;
+    padding-top: 20px;
+    padding-right: 20px;
+  }
+
+  /* Bottom tagline */
+  .tagline {
+    position: absolute;
+    bottom: 32px;
+    left: 80px;
+    font-size: 13px;
+    color: #9ca3af;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-bar"></div>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+
+  <div class="container">
+    <!-- LEFT -->
+    <div class="left">
+      <div class="logo">
+        <div class="logo-mark">D</div>
+        <span class="logo-name">DentaFlow</span>
+      </div>
+
+      <div>
+        <div class="headline">
+          Stop managing<br>bookings on<br><span class="accent">WhatsApp.</span>
+        </div>
+      </div>
+
+      <div class="sub">
+        Online booking, automated reminders, and patient recall — built for Singapore dental clinics.
+      </div>
+
+      <div class="tags">
+        <div class="tag"><div class="tag-dot"></div>Online Booking</div>
+        <div class="tag"><div class="tag-dot"></div>WhatsApp Reminders</div>
+        <div class="tag"><div class="tag-dot"></div>Recall Campaigns</div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-wrapper">
+      <!-- Floating notification -->
+      <div class="float-badge">
+        <div class="badge-dot"></div>
+        <div>
+          <div class="badge-text">Wong Wei Jie booked</div>
+          <div class="badge-sub">Scaling · 10:00 AM · Yishun</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-a"></div>
+          <div class="dot dot-g"></div>
+          <div class="url-bar">dentaflow.com/book/shuang-dentistry</div>
+        </div>
+        <div class="booking-form">
+          <div class="form-label">Book Appointment</div>
+          <div class="form-row">
+            <div class="form-field active">
+              <div class="field-label">Treatment</div>
+              <div class="field-value">Scaling & Polishing</div>
+            </div>
+            <div class="form-field active">
+              <div class="field-label">Date</div>
+              <div class="field-value">Monday, 28 Apr 2026</div>
+            </div>
+            <div class="form-field active">
+              <div class="field-label">Time</div>
+              <div class="field-value">10:00 AM</div>
+            </div>
+          </div>
+          <div class="confirm-btn">✓ Confirm Booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tagline">dentaflow.com · Built for Singapore dental clinics</div>
+</body>
+</html>

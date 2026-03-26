@@ -548,7 +548,7 @@ function MultiOutletAnim() {
             animate={{ opacity: 1, x: 0, y: 0 }}
             exit={{ opacity: 0, x: 24 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="absolute -right-2 top-16 bg-white rounded-xl border border-gray-100 shadow-xl p-3 w-52 z-10"
+            className="absolute -right-2 sm:-right-2 right-0 top-16 bg-white rounded-xl border border-gray-100 shadow-xl p-3 w-52 z-10"
           >
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-emerald-700">WJ</div>
@@ -1105,10 +1105,10 @@ export function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm"
+            className="rounded-2xl border border-gray-200 bg-white overflow-x-auto shadow-sm"
           >
             {/* Table header */}
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-3 min-w-[520px]">
               <div className="px-6 py-5 text-[11px] font-semibold uppercase tracking-wider text-gray-400 border-b border-gray-100">
                 Capability
               </div>
@@ -1163,7 +1163,7 @@ export function LandingPage() {
             ].map((row, i) => (
               <div
                 key={i}
-                className="grid grid-cols-3 border-b border-gray-100 last:border-0 group"
+                className="grid grid-cols-3 min-w-[520px] border-b border-gray-100 last:border-0 group"
               >
                 <div className="px-6 py-4 text-[13px] font-medium text-gray-700 flex items-center">
                   {row.feature}
