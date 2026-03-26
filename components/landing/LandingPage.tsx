@@ -1434,8 +1434,8 @@ function PricingSection() {
           </p>
         </motion.div>
 
-        {/* Controls: outlet selector + billing toggle */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
+        {/* Controls: outlet selector + billing toggle — stacked, fixed-width to prevent layout shift */}
+        <div className="flex flex-col items-center gap-3 mb-10">
           {/* Outlet selector */}
           <div className="flex items-center gap-3 bg-gray-50 rounded-xl border border-gray-200 px-4 py-3">
             <span className="text-sm text-gray-600 font-medium">Outlets:</span>
@@ -1450,11 +1450,11 @@ function PricingSection() {
                 className="w-7 h-7 rounded-lg border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 font-semibold text-sm transition-colors"
               >+</button>
             </div>
-            <span className="text-xs text-gray-400">{outlets === 1 ? "location" : "locations"}</span>
+            <span className="w-16 text-xs text-gray-400">{outlets === 1 ? "location" : "locations"}</span>
           </div>
 
-          {/* Billing toggle */}
-          <div className="flex items-center gap-2 bg-gray-50 rounded-xl border border-gray-200 px-4 py-3">
+          {/* Billing toggle — no container, own row, badge always rendered to prevent layout shift */}
+          <div className="flex items-center gap-3">
             <span className={`text-sm font-medium transition-colors ${!yearly ? "text-gray-900" : "text-gray-400"}`}>Monthly</span>
             <button
               onClick={() => setYearly(!yearly)}
@@ -1463,11 +1463,10 @@ function PricingSection() {
               <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${yearly ? "translate-x-5" : "translate-x-0"}`} />
             </button>
             <span className={`text-sm font-medium transition-colors ${yearly ? "text-gray-900" : "text-gray-400"}`}>Annual</span>
-            {yearly && (
-              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
-                2 months free
-              </span>
-            )}
+            {/* Always rendered — invisible when monthly to prevent layout shift */}
+            <span className={`inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 transition-opacity ${yearly ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+              2 months free
+            </span>
           </div>
         </div>
 
@@ -1496,13 +1495,14 @@ function PricingSection() {
               <div className="mb-5">
                 <p className="text-sm font-semibold text-gray-500 mb-0.5">{plan.name}</p>
                 <p className="text-[11px] text-gray-400 mb-3">{plan.tagline}</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  {plan.priceNote && <span className="text-xs text-gray-400 leading-tight max-w-[80px]">{plan.priceNote}</span>}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-4xl font-bold text-gray-900 tabular-nums">{plan.price}</span>
+                  {plan.priceNote && <span className="text-xs text-gray-400 leading-tight w-20 shrink-0">{plan.priceNote}</span>}
                 </div>
-                {plan.name !== "Starter" && outlets > 1 && (
-                  <p className="text-[11px] text-gray-400 mt-1">${plan.name === "Core" ? (yearly ? coreYearlyPerMonth : coreMonthly) : (yearly ? proYearlyPerMonth : proMonthly)} × {outlets} outlets</p>
-                )}
+                {/* Always rendered to prevent card height shift — invisible for Starter or 1 outlet */}
+                <p className={`text-[11px] text-gray-400 mt-1 ${plan.name !== "Starter" && outlets > 1 ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+                  ${plan.name === "Core" ? (yearly ? coreYearlyPerMonth : coreMonthly) : plan.name === "Pro" ? (yearly ? proYearlyPerMonth : proMonthly) : 0} × {outlets} outlets
+                </p>
                 <p className="text-sm text-gray-500 mt-2">{plan.description}</p>
               </div>
 
