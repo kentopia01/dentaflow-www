@@ -10,50 +10,92 @@ import { NumberTicker } from "./NumberTicker";
 
 /* ─── Feature Row ─── */
 function FeatureRow({
+  number,
   label,
   icon,
   title,
   description,
+  bullets,
   visual,
   align,
+  bg,
 }: {
+  number?: string;
   label: string;
   icon?: React.ReactNode;
   title: string;
-  description: string | React.ReactNode;
+  description?: string | React.ReactNode;
+  bullets?: { icon: React.ReactNode; text: string }[];
   visual: React.ReactNode;
   align: "left" | "right";
+  bg?: "white" | "gray" | "dark";
 }) {
+  const bgClass = bg === "dark"
+    ? "bg-gray-950 text-white"
+    : bg === "gray"
+    ? "bg-gray-50"
+    : "bg-white";
+
+  const labelColor = bg === "dark" ? "text-emerald-400" : "text-emerald-600";
+  const titleColor = bg === "dark" ? "text-white" : "text-gray-900";
+  const descColor = bg === "dark" ? "text-gray-400" : "text-gray-500";
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5 }}
-      className={`flex flex-col ${
-        align === "right" ? "md:flex-row" : "md:flex-row-reverse"
-      } gap-12 items-center mb-24`}
-    >
-      <div className="flex-1">
-        <div className="flex items-center gap-2 mb-2">
-          {icon && (
-            <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
-              {icon}
+    <div className={`${bgClass} px-6 py-20`}>
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className={`flex flex-col ${align === "right" ? "md:flex-row" : "md:flex-row-reverse"} gap-16 items-center`}
+        >
+          {/* Copy side */}
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              {number && (
+                <span className="text-[11px] font-bold text-gray-300 tabular-nums font-mono">{number}</span>
+              )}
+              {icon && (
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${bg === "dark" ? "bg-emerald-900/40" : "bg-emerald-50"}`}>
+                  {icon}
+                </div>
+              )}
+              <span className={`text-[10px] font-semibold uppercase tracking-widest ${labelColor}`}>
+                {label}
+              </span>
             </div>
-          )}
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">
-            {label}
-          </span>
-        </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
-          {title}
-        </h3>
-        <p className="mt-4 text-base text-gray-500 leading-relaxed">
-          {description}
-        </p>
+            <h3 className={`text-3xl md:text-4xl font-bold leading-snug mb-4 ${titleColor}`}>
+              {title}
+            </h3>
+            {description && (
+              <div className={`text-base leading-relaxed mb-6 ${descColor}`}>
+                {description}
+              </div>
+            )}
+            {bullets && bullets.length > 0 && (
+              <ul className="space-y-3">
+                {bullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className={`mt-0.5 flex-shrink-0 w-5 h-5 flex items-center justify-center ${bg === "dark" ? "text-emerald-400" : "text-emerald-600"}`}>
+                      {b.icon}
+                    </span>
+                    <span className={`text-sm leading-snug ${bg === "dark" ? "text-gray-300" : "text-gray-700"}`}>
+                      {b.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Visual side */}
+          <div className="flex-1 flex items-center justify-center min-h-[400px]">
+            {visual}
+          </div>
+        </motion.div>
       </div>
-      <div className="flex-1 flex items-center justify-center min-h-[280px]">{visual}</div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -444,18 +486,20 @@ function AnalyticsDashboardAnim() {
 /* ─── Analytics Teaser ─── */
 function AnalyticsTeaser() {
   return (
-    <section className="py-24 bg-white px-6 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto">
-        <FeatureRow
-          label="ANALYTICS"
-          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>}
-          title="Know your numbers without digging."
-          description="Appointments booked, no-show rate, WhatsApp messages sent — your clinic metrics update in real time. No spreadsheets, no manual counting, no end-of-month surprises."
-          visual={<AnalyticsDashboardAnim />}
-          align="right"
-        />
-      </div>
-    </section>
+    <FeatureRow
+      number="05"
+      label="ANALYTICS"
+      icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>}
+      title="Know your numbers without digging."
+      bullets={[
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Appointments, no-show rate, and WhatsApp metrics — updated in real time" },
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Weekly trends in a bar chart — no spreadsheet required" },
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Month-over-month deltas so you can see what's improving" },
+      ]}
+      visual={<AnalyticsDashboardAnim />}
+      align="right"
+      bg="gray"
+    />
   );
 }
 
@@ -571,18 +615,20 @@ function MultiOutletAnim() {
 /* ─── Multi-Outlet Section ─── */
 function MultiOutletSection() {
   return (
-    <section className="py-24 bg-gray-50 px-6 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto">
-        <FeatureRow
-          label="MULTI-OUTLET"
-          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>}
-          title="Running more than one outlet? One dashboard. All locations."
-          description="Each outlet gets its own booking link, treatment menu, and operating hours. Patients always book the right location. You see everything from one place — no separate logins, no switching between apps."
-          visual={<MultiOutletAnim />}
-          align="left"
-        />
-      </div>
-    </section>
+    <FeatureRow
+      number="06"
+      label="MULTI-OUTLET"
+      icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>}
+      title="One dashboard. All your outlets."
+      bullets={[
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Each outlet gets its own booking URL, treatment menu, and operating hours" },
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Shared patient records — a patient at Yishun is the same record at Orchard" },
+        { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Today view filters by outlet with one tap — see any location at a glance" },
+      ]}
+      visual={<MultiOutletAnim />}
+      align="left"
+      bg="white"
+    />
   );
 }
 
@@ -694,12 +740,12 @@ export function LandingPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs text-emerald-700 font-medium mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Now accepting Singapore clinics · Early access
+              Now in early access · Singapore clinics
             </div>
 
             {/* Headline */}
             <h1 className="text-5xl md:text-6xl font-bold leading-[1.08] tracking-tight mb-6 text-gray-900">
-              Stop managing dental<br />
+              Stop managing<br />
               <span className="text-emerald-600">bookings on WhatsApp.</span>
             </h1>
 
@@ -853,7 +899,7 @@ export function LandingPage() {
             {[
               {
                 stat: "45 min",
-                label: "Spent daily on WhatsApp confirmations",
+                label: "Per day on manual WhatsApp confirmations",
                 description:
                   "Your receptionist's morning is spent chasing patients one by one. That's time she could spend with patients in front of her.",
               },
@@ -865,7 +911,7 @@ export function LandingPage() {
               },
               {
                 stat: "40%",
-                label: "Of patients don't come back after 12 months",
+                label: "of patients don't return after 12 months",
                 description:
                   "They're not gone — they just forgot. No recall system means no one's asking them to come back.",
               },
@@ -986,104 +1032,95 @@ export function LandingPage() {
 
       {/* Integration section moved — now part of unified SetupSection after Pricing */}
 
-      {/* Feature pillars */}
-      <section id="features" className="py-24 bg-gray-50 px-6 dot-grid">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+      {/* Feature pillars — each row is its own full-width section */}
+      <div id="features">
+        <div className="text-center py-16 px-6 bg-gray-50 border-b border-gray-100">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Features</p>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Everything your clinic needs.
-              <br />
-              Nothing it doesn&apos;t.
+              Everything your clinic needs.<br />Nothing it doesn&apos;t.
             </h2>
-          </div>
-
-          <FeatureRow
-            label="BOOKINGS"
-            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>}
-            title="Works with or without a website."
-            description={
-              <div className="space-y-4">
-                <p className="text-base text-gray-500 leading-relaxed">
-                  Every clinic gets a hosted booking page at your own URL — ready to share anywhere patients might find you. If you already have a website, drop in one line of code and a booking button appears on every page.
-                </p>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Works with</p>
-                  <div className="flex flex-wrap gap-2">
-                    {["Google Business Profile", "SGDentistry", "WordPress", "Wix", "Squarespace", "Webflow", "Any website"].map((s) => (
-                      <span key={s} className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-600">{s}</span>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm text-gray-400">Patients book in under 90 seconds. No calls, no back-and-forth.</p>
-              </div>
-            }
-            visual={<BookingAnimation />}
-            align="right"
-          />
-          <FeatureRow
-            label="PATIENTS"
-            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>}
-            title="Patient records. Real time, always updated."
-            description={
-              <div className="space-y-4">
-                <p className="text-base text-gray-500 leading-relaxed">
-                  Every booking builds a patient profile automatically — appointment history, WhatsApp status, recall schedule — all in one place, not scattered across chats and spreadsheets.
-                </p>
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50/60 px-4 py-3">
-                  <p className="text-sm font-semibold text-gray-800 mb-0.5">Already using existing software?</p>
-                  <p className="text-sm text-gray-500">We handle the migration seamlessly so you can get started right away — no manual re-entry.</p>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {["Dental4Windows", "CSV / Excel", "Any spreadsheet"].map((s) => (
-                      <span key={s} className="inline-flex items-center rounded-full border border-emerald-200 bg-white px-2.5 py-0.5 text-xs font-medium text-emerald-700">{s}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            }
-            visual={<PatientAnimation />}
-            align="left"
-          />
-          <FeatureRow
-            label="MESSAGING"
-            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>}
-            title="WhatsApp automations built in. Zero setup."
-            description={
-              <div className="space-y-4">
-                <p className="text-base text-gray-500 leading-relaxed">
-                  The moment a patient books, a WhatsApp confirmation goes out automatically. A 24-hour reminder follows. Then a 2-hour reminder before the appointment. Patients never miss — and your receptionist never has to type a single message.
-                </p>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Automatic reminders</p>
-                  <div className="space-y-2">
-                    {[
-                      { label: "Booking confirmed", when: "Immediately on booking" },
-                      { label: "24h reminder", when: "Day before appointment" },
-                      { label: "2h reminder", when: "Morning of appointment" },
-                    ].map((item) => (
-                      <div key={item.label} className="flex items-center gap-3">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                        <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                        <span className="text-xs text-gray-400 ml-auto">{item.when}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm font-semibold text-emerald-700">No-shows fall by up to 65%.</p>
-              </div>
-            }
-            visual={<MessagingAnimation />}
-            align="right"
-          />
-          <FeatureRow
-            label="RECALL"
-            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
-            title="Patients who haven't returned in 6 months are revenue waiting."
-            description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
-            visual={<RecallAnimation />}
-            align="left"
-          />
+          </motion.div>
         </div>
-      </section>
+
+        <FeatureRow
+          number="01"
+          label="ONLINE BOOKING"
+          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>}
+          title="Works with or without a website."
+          description="Every clinic gets a hosted booking page, ready to share anywhere patients might find you."
+          bullets={[
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Live booking link in under 5 minutes — no developer needed" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Each outlet gets its own URL — /book/yishun, /book/orchard" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Patients book in under 90 seconds, 24/7 — no calls, no back-and-forth" },
+          ]}
+          visual={
+            <div className="w-full max-w-lg">
+              <BookingAnimation />
+              <div className="flex flex-wrap gap-1.5 mt-4 justify-center">
+                {["Google Business", "SGDentistry", "WhatsApp Bio", "Instagram", "Any website"].map((s) => (
+                  <span key={s} className="inline-flex items-center rounded-full border border-gray-200 bg-white px-2.5 py-1 text-xs font-medium text-gray-500 shadow-sm">{s}</span>
+                ))}
+              </div>
+            </div>
+          }
+          align="right"
+          bg="white"
+        />
+
+        <FeatureRow
+          number="02"
+          label="PATIENT RECORDS"
+          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>}
+          title="Patient records. Real time, always updated."
+          description="Every booking builds a profile automatically — full history in one place, not scattered across chats and spreadsheets."
+          bullets={[
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Profiles built automatically from every booking — zero manual entry" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Import from Dental4Windows or any CSV — migration handled for you" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Full history: visits, treatments, WhatsApp status, recall schedule" },
+          ]}
+          visual={<PatientAnimation />}
+          align="left"
+          bg="gray"
+        />
+
+        <FeatureRow
+          number="03"
+          label="WHATSAPP AUTOMATION"
+          icon={<img src="/icons/whatsapp.svg" alt="WhatsApp" className="w-4 h-4" />}
+          title="WhatsApp automations built in. Zero setup."
+          description="The moment a patient books, a confirmation goes out. Your receptionist sends zero manual messages."
+          bullets={[
+            { icon: <img src="/icons/whatsapp.svg" alt="" className="w-4 h-4" />, text: "Booking confirmation sent instantly — before the patient closes the tab" },
+            { icon: <img src="/icons/whatsapp.svg" alt="" className="w-4 h-4" />, text: "24-hour and 2-hour reminders fire automatically — no staff involvement" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-400"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "No-shows drop by up to 65% — clinics report this within the first month" },
+          ]}
+          visual={
+            <div className="relative">
+              <div className="absolute -inset-4 bg-emerald-500/10 rounded-3xl blur-xl" />
+              <MessagingAnimation />
+            </div>
+          }
+          align="right"
+          bg="dark"
+        />
+
+        <FeatureRow
+          number="04"
+          label="RECALL CAMPAIGNS"
+          icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
+          title="Patients who haven&apos;t returned in 6 months are revenue waiting."
+          description="DentaFlow surfaces every overdue patient and queues their recall message automatically."
+          bullets={[
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "DentaFlow flags every patient overdue for their 6-month check-up — automatically" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "One click to queue their recall message — no list-building, no manual outreach" },
+            { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "Chairs fill from patients who already trust you — highest conversion rate of any channel" },
+          ]}
+          visual={<RecallAnimation />}
+          align="left"
+          bg="white"
+        />
+      </div>
 
       {/* Analytics teaser */}
       <AnalyticsTeaser />
@@ -1883,8 +1920,8 @@ function FaqSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-3">Got questions?</p>
-          <h2 className="text-3xl font-bold text-gray-900">Common questions</h2>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-3">Support</p>
+          <h2 className="text-3xl font-bold text-gray-900">Frequently asked questions</h2>
         </motion.div>
 
         <div className="space-y-2">
