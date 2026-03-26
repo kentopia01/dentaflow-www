@@ -653,10 +653,9 @@ export function LandingPage() {
           {/* Nav links */}
           <div className="hidden md:flex items-center gap-6 text-sm text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
-            <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
             <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
-            <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
             <Link href="/blog" className="hover:text-gray-900 transition-colors">Blog</Link>
+            <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
             <a href="#waitlist" className="hover:text-gray-900 transition-colors">Early Access</a>
           </div>
           <a href="#waitlist" className="hidden md:block">
@@ -686,10 +685,9 @@ export function LandingPage() {
           <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-1">
             {[
               { href: "#features", label: "Features" },
-              { href: "#how-it-works", label: "How it works" },
               { href: "#pricing", label: "Pricing" },
-              { href: "/about", label: "About" },
               { href: "/blog", label: "Blog" },
+              { href: "/about", label: "About" },
               { href: "#waitlist", label: "Early Access" },
             ].map((link) => (
               <a

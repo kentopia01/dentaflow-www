@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import { SiteNav } from "@/components/landing/SiteNav";
 
 export const metadata = {
   title: "Blog — DentaFlow",
@@ -11,28 +12,7 @@ export default function BlogIndexPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">D</span>
-            </div>
-            <span className="font-semibold text-[15px] text-gray-900">DentaFlow</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
-            <Link href="/#features" className="hover:text-gray-900 transition-colors">Features</Link>
-            <Link href="/#pricing" className="hover:text-gray-900 transition-colors">Pricing</Link>
-            <Link href="/blog" className="text-emerald-700 font-medium">Blog</Link>
-            <Link href="/about" className="hover:text-gray-900 transition-colors">About</Link>
-          </div>
-          <Link href="/#waitlist">
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 rounded-lg font-semibold active:scale-[0.98] transition-all">
-              Request early access
-            </button>
-          </Link>
-        </div>
-      </nav>
+      <SiteNav activePage="blog" />
 
       {/* Header */}
       <section className="pt-28 pb-12 px-6 border-b border-gray-100">

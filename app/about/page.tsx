@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteNav } from "@/components/landing/SiteNav";
 
 export const metadata = {
   title: "About — DentaFlow",
@@ -8,28 +9,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Nav — reuse same nav pattern */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">D</span>
-            </div>
-            <span className="font-semibold text-gray-900 text-[15px]">DentaFlow</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-600">
-            <Link href="/#features" className="hover:text-gray-900 transition-colors">Features</Link>
-            <Link href="/#how-it-works" className="hover:text-gray-900 transition-colors">How it works</Link>
-            <Link href="/about" className="text-emerald-700 font-medium">About</Link>
-            <Link href="/#waitlist" className="hover:text-gray-900 transition-colors">Early Access</Link>
-          </div>
-          <Link href="/#waitlist">
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 rounded-lg font-semibold active:scale-[0.98] transition-all">
-              Get early access
-            </button>
-          </Link>
-        </div>
-      </nav>
+      <SiteNav activePage="about" />
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">

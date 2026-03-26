@@ -107,7 +107,7 @@ async function sendWelcomeEmail(data: z.infer<typeof waitlistSchema>) {
       <!-- Subtext -->
       <tr><td style="padding-bottom:28px;">
         <p style="margin:0;font-size:15px;color:#6b7280;line-height:1.7;">
-          Thanks for signing up for DentaFlow early access. We're onboarding dental clinics in batches and will reach out as soon as your slot opens — usually within 2 weeks.
+          Thanks for signing up for DentaFlow early access. We're onboarding dental clinics in batches and will reach out as soon as your slot opens — usually within 3–5 business days.
         </p>
       </td></tr>
 
