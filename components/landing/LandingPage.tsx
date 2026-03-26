@@ -646,12 +646,10 @@ export function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">D</span>
             </div>
-            <span className="font-semibold text-base text-gray-900">
-              DentaFlow
-            </span>
+            <span className="font-semibold text-[15px] text-gray-900">DentaFlow</span>
           </a>
           {/* Nav links */}
-          <div className="hidden md:flex items-center gap-6 text-sm text-gray-500">
+          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
             <Link href="/blog" className="hover:text-gray-900 transition-colors">Blog</Link>
@@ -659,9 +657,9 @@ export function LandingPage() {
             <a href="#waitlist" className="hover:text-gray-900 transition-colors">Early Access</a>
           </div>
           <a href="#waitlist" className="hidden md:block">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm h-9 px-4 active:scale-[0.98]">
+            <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 rounded-lg font-semibold active:scale-[0.98] transition-all">
               Get early access
-            </Button>
+            </button>
           </a>
           {/* Hamburger — mobile only */}
           <button
