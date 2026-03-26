@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import { SiteNav } from "@/components/landing/SiteNav";
+import { SiteFooter } from "@/components/landing/SiteFooter";
 
 export const metadata = {
   title: "Blog — DentaFlow",
@@ -58,23 +59,7 @@ export default function BlogIndexPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-10 border-t border-gray-100 px-6 mt-auto">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-emerald-600 flex items-center justify-center">
-              <span className="text-white font-bold text-xs">D</span>
-            </div>
-            <span className="text-[13px] font-semibold text-gray-700">DentaFlow</span>
-          </Link>
-          <div className="flex items-center gap-6 text-[12px] text-gray-400">
-            <Link href="/" className="hover:text-gray-600">Home</Link>
-            <Link href="/blog" className="hover:text-gray-600">Blog</Link>
-            <Link href="/about" className="hover:text-gray-600">About</Link>
-          </div>
-          <p className="text-[11px] text-gray-400">© 2026 DentaFlow · Built for Singapore</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
