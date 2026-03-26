@@ -30,18 +30,13 @@ function FeatureRow({
   align: "left" | "right";
   bg?: "white" | "gray" | "dark";
 }) {
-  const bgClass = bg === "dark"
-    ? "bg-gray-950 text-white"
-    : bg === "gray"
-    ? "bg-gray-50"
-    : "bg-white";
-
-  const labelColor = bg === "dark" ? "text-emerald-400" : "text-emerald-600";
-  const titleColor = bg === "dark" ? "text-white" : "text-gray-900";
-  const descColor = bg === "dark" ? "text-gray-400" : "text-gray-500";
+  const bgClass = "bg-white";
+  const labelColor = "text-emerald-600";
+  const titleColor = "text-gray-900";
+  const descColor = "text-gray-500";
 
   return (
-    <div className={`${bgClass} px-6 py-20`}>
+    <div className={`${bgClass} px-6 py-20 border-b border-gray-100`}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -57,7 +52,7 @@ function FeatureRow({
                 <span className="text-[11px] font-bold text-gray-300 tabular-nums font-mono">{number}</span>
               )}
               {icon && (
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${bg === "dark" ? "bg-emerald-900/40" : "bg-emerald-50"}`}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-50">
                   {icon}
                 </div>
               )}
@@ -77,10 +72,10 @@ function FeatureRow({
               <ul className="space-y-3">
                 {bullets.map((b, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className={`mt-0.5 flex-shrink-0 w-5 h-5 flex items-center justify-center ${bg === "dark" ? "text-emerald-400" : "text-emerald-600"}`}>
+                    <span className="mt-0.5 flex-shrink-0 w-5 h-5 flex items-center justify-center text-emerald-600">
                       {b.icon}
                     </span>
-                    <span className={`text-sm leading-snug ${bg === "dark" ? "text-gray-300" : "text-gray-700"}`}>
+                    <span className="text-sm leading-snug text-gray-700">
                       {b.text}
                     </span>
                   </li>
@@ -498,7 +493,7 @@ function AnalyticsTeaser() {
       ]}
       visual={<AnalyticsDashboardAnim />}
       align="right"
-      bg="gray"
+      bg="white"
     />
   );
 }
@@ -939,97 +934,6 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="py-24 px-6 bg-white section-glow-top">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Setup in minutes</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              From zero to fully automated<br />in under 10 minutes.
-            </h2>
-            <p className="mt-4 text-gray-500 text-base max-w-xl mx-auto">
-              No IT team. No training week. No migration project. Most clinics are live before lunch.
-            </p>
-          </motion.div>
-
-          {/* Steps — connected with a line */}
-          <div className="relative">
-            {/* Connecting line (desktop only) */}
-            <div className="hidden md:block absolute top-8 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-emerald-100" />
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  step: "01",
-                  time: "2 min",
-                  title: "Set up your clinic",
-                  description: "Enter your clinic name, add your outlets, and select which treatments patients can book online. That\u2019s it \u2014 your profile is ready.",
-                  icon: (
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
-                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                    </svg>
-                  ),
-                },
-                {
-                  step: "02",
-                  time: "1 min",
-                  title: "Share your booking link",
-                  description: "Paste one line of code on your website \u2014 or skip the website entirely. Your DentaFlow link works everywhere: WhatsApp bio, Google My Business, Instagram.",
-                  icon: (
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
-                      <path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z"/>
-                    </svg>
-                  ),
-                },
-                {
-                  step: "03",
-                  time: "Ongoing",
-                  title: "Run on autopilot",
-                  description: "Patients book. Reminders send automatically. Recalls queue up. You manage from one dashboard \u2014 instead of 14 WhatsApp chats.",
-                  icon: (
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-                    </svg>
-                  ),
-                },
-              ].map((step, i) => (
-                <motion.div
-                  key={step.step}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.15 }}
-                  className="relative text-center"
-                >
-                  {/* Step circle */}
-                  <div className="mx-auto mb-6 relative w-16 h-16">
-                    <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center relative z-10">
-                      {step.icon}
-                    </div>
-                    <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center z-20">
-                      {i + 1}
-                    </span>
-                  </div>
-                  {/* Time badge */}
-                  <span className="inline-block mb-3 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-0.5">
-                    {step.time}
-                  </span>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed max-w-[260px] mx-auto">{step.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
-
       {/* Integration section moved — now part of unified SetupSection after Pricing */}
 
       {/* Feature pillars — each row is its own full-width section */}
@@ -1081,7 +985,7 @@ export function LandingPage() {
           ]}
           visual={<PatientAnimation />}
           align="left"
-          bg="gray"
+          bg="white"
         />
 
         <FeatureRow
@@ -1095,14 +999,9 @@ export function LandingPage() {
             { icon: <svg viewBox="0 0 24 24" fill="#25D366" className="w-4 h-4 flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>, text: "24-hour and 2-hour reminders fire automatically — no staff involvement" },
             { icon: <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-400"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" /></svg>, text: "No-shows drop by up to 65% — clinics report this within the first month" },
           ]}
-          visual={
-            <div className="relative">
-              <div className="absolute -inset-4 bg-emerald-500/10 rounded-3xl blur-xl" />
-              <MessagingAnimation />
-            </div>
-          }
+          visual={<MessagingAnimation />}
           align="right"
-          bg="dark"
+          bg="white"
         />
 
         <FeatureRow
