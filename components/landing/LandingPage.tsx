@@ -998,6 +998,9 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* Integration section — moved here after How it works */}
+      <IntegrationSection />
+
       {/* Feature pillars */}
       <section id="features" className="py-24 bg-gray-50 px-6 dot-grid">
         <div className="max-w-6xl mx-auto">
@@ -1033,31 +1036,14 @@ export function LandingPage() {
             visual={<MessagingAnimation />}
             align="right"
           />
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="mb-0"
-          >
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>
-                </div>
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">RECALL</span>
-              </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug max-w-2xl mx-auto">
-                Patients who haven&apos;t returned in 6 months are revenue waiting.
-              </h3>
-              <p className="mt-4 text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-                DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call.
-              </p>
-            </div>
-            <div className="flex items-center justify-center">
-              <RecallAnimation />
-            </div>
-          </motion.div>
+          <FeatureRow
+            label="RECALL"
+            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
+            title="Patients who haven't returned in 6 months are revenue waiting."
+            description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
+            visual={<RecallAnimation />}
+            align="left"
+          />
         </div>
       </section>
 
@@ -1066,9 +1052,6 @@ export function LandingPage() {
 
       {/* Multi-outlet callout */}
       <MultiOutletSection />
-
-      {/* Integration section — expandable */}
-      <IntegrationSection />
 
       {/* Mid-page CTA band */}
       <section className="py-16 px-6 bg-emerald-600">
@@ -1266,7 +1249,7 @@ export function LandingPage() {
                 Built in Singapore. Open worldwide.
               </h2>
               <p className="mt-4 text-gray-500 text-base">
-                We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out when your slot opens — usually within 2 weeks.
+                We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out within 3–5 business days.
               </p>
               <WaitlistForm />
             </div>
@@ -1299,58 +1282,86 @@ export function LandingPage() {
 
 /* ─── Pricing Section ─── */
 function PricingSection() {
+  const [outlets, setOutlets] = useState(1);
+  const [yearly, setYearly] = useState(false);
+
+  const coreMonthly = 120;
+  const proMonthly = 480;
+  const coreYearlyPerMonth = 100; // $1200/year = $100/month
+  const proYearlyPerMonth = 400;  // $4800/year = $400/month
+
+  const corePrice = yearly ? coreYearlyPerMonth * outlets : coreMonthly * outlets;
+  const proPrice = yearly ? proYearlyPerMonth * outlets : proMonthly * outlets;
+  const coreBilling = yearly ? "/ month, billed annually" : "/ month";
+  const proBilling = yearly ? "/ month, billed annually" : "/ month";
+
   const plans = [
     {
       name: "Starter",
+      tagline: "Get started with online booking",
       price: "Free",
       priceNote: "forever",
-      description: "For solo dentists testing the waters.",
+      description: "For solo dentists testing online booking.",
       features: [
-        "1 active outlet",
-        "Unlimited online bookings",
-        "WhatsApp confirmation (via DentaFlow number)",
-        "Patient profiles",
-        "Basic recall reminders",
-        "DentaFlow booking page",
+        { label: "Booking widget (website embed)", included: true },
+        { label: "Hosted booking page", included: true },
+        { label: "Patient dashboard", included: true },
+        { label: "Appointment management", included: true },
+        { label: "Patient CSV import", included: true },
+        { label: "Up to 2 active outlets", included: true },
+        { label: "WhatsApp automation", included: false },
+        { label: "Automated reminders", included: false },
+        { label: "Recall campaigns", included: false },
+        { label: "Custom booking URL slug", included: false },
       ],
       cta: "Start free",
       ctaHref: "#waitlist",
       highlight: false,
+      order: "order-2 md:order-1",
     },
     {
       name: "Core",
-      price: "$49",
-      priceNote: "/ month",
-      description: "For growing clinics that want full automation.",
+      tagline: "Full automation for growing clinics",
+      price: `$${corePrice}`,
+      priceNote: coreBilling,
+      description: "Everything in Starter, plus WhatsApp automation and recall.",
       features: [
-        "Up to 3 active outlets",
-        "Everything in Starter",
-        "Custom booking URL slug",
-        "Custom widget colour (brand colours)",
-        "Priority WhatsApp delivery",
-        "CSV patient import",
-        "Email support",
+        { label: "Booking widget (website embed)", included: true },
+        { label: "Hosted booking page", included: true },
+        { label: "Patient dashboard", included: true },
+        { label: "Appointment management", included: true },
+        { label: "Patient CSV import", included: true },
+        { label: "Unlimited active outlets", included: true },
+        { label: "WhatsApp automation", included: true, note: "Confirmations, reminders, recalls" },
+        { label: "Automated 24h + 2h reminders", included: true },
+        { label: "6-month recall queue", included: true },
+        { label: "Custom booking URL slug", included: true },
       ],
       cta: "Get early access",
       ctaHref: "#waitlist",
       highlight: true,
+      order: "order-1 md:order-2",
     },
     {
       name: "Pro",
-      price: "$99",
-      priceNote: "/ month",
-      description: "For multi-outlet groups that need more.",
+      tagline: "Marketing automation for high-volume clinics",
+      price: `$${proPrice}`,
+      priceNote: proBilling,
+      description: "Everything in Core, plus branding and campaign tools.",
       features: [
-        "Unlimited outlets",
-        "Everything in Core",
-        "Dedicated WhatsApp Business number",
-        "Analytics by outlet",
-        "Advanced recall campaigns",
-        "Priority support + onboarding call",
+        { label: "Everything in Core", included: true },
+        { label: "Unlimited active outlets", included: true },
+        { label: "Custom brand colour on widget", included: true },
+        { label: "WhatsApp marketing campaigns", included: true, note: "Send promos to opted-in patients" },
+        { label: "Patient segmentation by treatment", included: true },
+        { label: "Dedicated WhatsApp Business number", included: true },
+        { label: "Analytics by outlet", included: true },
+        { label: "Priority support + onboarding call", included: true },
       ],
       cta: "Talk to us",
       ctaHref: "#waitlist",
       highlight: false,
+      order: "order-3 md:order-3",
     },
   ];
 
@@ -1361,7 +1372,7 @@ function PricingSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-10"
         >
           <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Pricing</p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Simple pricing. No surprises.</h2>
@@ -1369,6 +1380,43 @@ function PricingSection() {
             Start free. Upgrade when you&apos;re ready. No setup fees, no contracts, no per-booking charges.
           </p>
         </motion.div>
+
+        {/* Controls: outlet selector + billing toggle */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
+          {/* Outlet selector */}
+          <div className="flex items-center gap-3 bg-gray-50 rounded-xl border border-gray-200 px-4 py-3">
+            <span className="text-sm text-gray-600 font-medium">Outlets:</span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setOutlets(Math.max(1, outlets - 1))}
+                className="w-7 h-7 rounded-lg border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 font-semibold text-sm transition-colors"
+              >−</button>
+              <span className="w-8 text-center font-bold text-gray-900 text-lg tabular-nums">{outlets}</span>
+              <button
+                onClick={() => setOutlets(Math.min(20, outlets + 1))}
+                className="w-7 h-7 rounded-lg border border-gray-200 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 font-semibold text-sm transition-colors"
+              >+</button>
+            </div>
+            <span className="text-xs text-gray-400">{outlets === 1 ? "location" : "locations"}</span>
+          </div>
+
+          {/* Billing toggle */}
+          <div className="flex items-center gap-2 bg-gray-50 rounded-xl border border-gray-200 px-4 py-3">
+            <span className={`text-sm font-medium transition-colors ${!yearly ? "text-gray-900" : "text-gray-400"}`}>Monthly</span>
+            <button
+              onClick={() => setYearly(!yearly)}
+              className={`relative w-10 h-5 rounded-full transition-colors ${yearly ? "bg-emerald-600" : "bg-gray-300"}`}
+            >
+              <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${yearly ? "translate-x-5" : "translate-x-0"}`} />
+            </button>
+            <span className={`text-sm font-medium transition-colors ${yearly ? "text-gray-900" : "text-gray-400"}`}>Annual</span>
+            {yearly && (
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
+                2 months free
+              </span>
+            )}
+          </div>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-6 items-start">
           {plans.map((plan, i) => (
@@ -1378,10 +1426,10 @@ function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`rounded-2xl border p-6 relative ${
+              className={`rounded-2xl border p-6 relative ${plan.order} ${
                 plan.highlight
-                  ? "border-emerald-500 bg-emerald-50/40 shadow-lg shadow-emerald-100 order-1 md:order-2"
-                  : plan.name === "Starter" ? "border-gray-200 bg-white order-2 md:order-1" : "border-gray-200 bg-white order-3 md:order-3"
+                  ? "border-emerald-500 bg-emerald-50/40 shadow-lg shadow-emerald-100"
+                  : "border-gray-200 bg-white"
               }`}
             >
               {plan.highlight && (
@@ -1393,21 +1441,34 @@ function PricingSection() {
               )}
 
               <div className="mb-5">
-                <p className="text-sm font-semibold text-gray-500 mb-1">{plan.name}</p>
+                <p className="text-sm font-semibold text-gray-500 mb-0.5">{plan.name}</p>
+                <p className="text-[11px] text-gray-400 mb-3">{plan.tagline}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="text-sm text-gray-400">{plan.priceNote}</span>
+                  {plan.priceNote && <span className="text-xs text-gray-400 leading-tight max-w-[80px]">{plan.priceNote}</span>}
                 </div>
+                {plan.name !== "Starter" && outlets > 1 && (
+                  <p className="text-[11px] text-gray-400 mt-1">${plan.name === "Core" ? (yearly ? coreYearlyPerMonth : coreMonthly) : (yearly ? proYearlyPerMonth : proMonthly)} × {outlets} outlets</p>
+                )}
                 <p className="text-sm text-gray-500 mt-2">{plan.description}</p>
               </div>
 
-              <ul className="space-y-2.5 mb-6">
+              <ul className="space-y-2 mb-6">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5">
-                    <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
-                      <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span className="text-sm text-gray-600">{f}</span>
+                  <li key={f.label} className="flex items-start gap-2.5">
+                    {f.included ? (
+                      <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
+                        <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4 text-gray-300 flex-shrink-0 mt-0.5" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
+                    )}
+                    <span className={`text-sm leading-snug ${f.included ? "text-gray-600" : "text-gray-400"}`}>
+                      {f.label}
+                      {f.note && <span className="text-xs text-gray-400 ml-1">— {f.note}</span>}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -1426,7 +1487,7 @@ function PricingSection() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-8">
-          All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
+          Pricing is per outlet per month. All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
         </p>
       </div>
     </section>

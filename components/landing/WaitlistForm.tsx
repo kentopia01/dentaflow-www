@@ -69,7 +69,7 @@ export function WaitlistForm() {
         </div>
         <h3 className="text-lg font-semibold text-gray-900">You&apos;re on the list.</h3>
         <p className="mt-2 text-[13px] text-gray-500">
-          We&apos;ll email you when your early access slot opens — usually within 2 weeks.
+          We&apos;ll email you when your early access slot opens — usually within 3–5 business days.
         </p>
       </div>
     );
@@ -152,7 +152,7 @@ export function WaitlistForm() {
         Get early access →
       </button>
       <p className="text-[11px] text-gray-400 text-center">
-        No credit card. No commitment. We&apos;ll be in touch within 2 weeks.
+        No credit card. No commitment. We&apos;ll be in touch within 3–5 business days.
       </p>
     </form>
   );
