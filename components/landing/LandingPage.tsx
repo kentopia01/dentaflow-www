@@ -48,7 +48,7 @@ function FeatureRow({
         <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
           {title}
         </h3>
-        <p className="mt-4 text-[15px] text-gray-500 leading-relaxed">
+        <p className="mt-4 text-base text-gray-500 leading-relaxed">
           {description}
         </p>
       </div>
@@ -601,12 +601,12 @@ export function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">D</span>
             </div>
-            <span className="font-semibold text-[15px] text-gray-900">
+            <span className="font-semibold text-base text-gray-900">
               DentaFlow
             </span>
           </a>
           {/* Nav links */}
-          <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
+          <div className="hidden md:flex items-center gap-6 text-sm text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
             <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
@@ -615,8 +615,8 @@ export function LandingPage() {
             <a href="#waitlist" className="hover:text-gray-900 transition-colors">Early Access</a>
           </div>
           <a href="#waitlist" className="hidden md:block">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 active:scale-[0.98]">
-              Request early access
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm h-9 px-4 active:scale-[0.98]">
+              Get early access
             </Button>
           </a>
           {/* Hamburger — mobile only */}
@@ -651,15 +651,15 @@ export function LandingPage() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileNavOpen(false)}
-                className="block py-2.5 text-[15px] text-gray-700 hover:text-emerald-700 transition-colors border-b border-gray-50 last:border-0"
+                className="block py-2.5 text-base text-gray-700 hover:text-emerald-700 transition-colors border-b border-gray-50 last:border-0"
               >
                 {link.label}
               </a>
             ))}
             <div className="pt-3">
               <a href="#waitlist" onClick={() => setMobileNavOpen(false)}>
-                <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-11 rounded-lg text-[15px] font-semibold transition-all active:scale-[0.98]">
-                  Request early access →
+                <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-11 rounded-lg text-base font-semibold transition-all active:scale-[0.98]">
+                  Get early access →
                 </button>
               </a>
             </div>
@@ -692,7 +692,7 @@ export function LandingPage() {
             transition={{ duration: 0.5 }}
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-[12px] text-emerald-700 font-medium mb-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs text-emerald-700 font-medium mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Now accepting Singapore clinics · Early access
             </div>
@@ -703,14 +703,14 @@ export function LandingPage() {
               <span className="text-emerald-600">bookings on WhatsApp.</span>
             </h1>
 
-            <p className="text-[17px] text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
               DentaFlow gives Singapore dental clinics online booking, automated reminders, and recall campaigns — all in one place.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="#waitlist">
-                <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-lg text-[15px] font-semibold active:scale-[0.98] transition-all duration-150">
-                  Request early access →
+                <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-lg text-base font-semibold active:scale-[0.98] transition-all duration-150">
+                  Get early access →
                 </button>
               </a>
               <a
@@ -718,7 +718,7 @@ export function LandingPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="h-12 px-8 rounded-lg text-[15px] font-medium text-gray-600 border border-gray-200 hover:border-gray-300 hover:text-gray-900 bg-white hover:bg-gray-50 transition-all duration-150">
+                <button className="h-12 px-8 rounded-lg text-base font-medium text-gray-600 border border-gray-200 hover:border-gray-300 hover:text-gray-900 bg-white hover:bg-gray-50 transition-all duration-150">
                   See live demo ↗
                 </button>
               </a>
@@ -790,8 +790,6 @@ export function LandingPage() {
               />
             </div>
 
-            {/* Fade bottom into social proof */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
           </motion.div>
 
           <div className="h-16" />
@@ -824,7 +822,7 @@ export function LandingPage() {
               ))}
               <span className="ml-3 text-sm text-gray-600">+40 clinics on early access</span>
             </div>
-            <p className="text-[12px] font-semibold uppercase tracking-widest text-gray-400">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
               Trusted by Singapore dental clinics
             </p>
           </div>
@@ -880,13 +878,13 @@ export function LandingPage() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="rounded-xl border border-gray-200 bg-white p-6"
               >
-                <p className="text-4xl font-bold text-gray-900 mb-2">
+                <p className="text-5xl font-bold text-emerald-700 mb-2 leading-none">
                   {item.stat}
                 </p>
-                <p className="text-[13px] font-semibold text-gray-700 mb-2">
+                <p className="text-sm font-semibold text-gray-700 mb-2">
                   {item.label}
                 </p>
-                <p className="text-[13px] text-gray-500 leading-relaxed">
+                <p className="text-sm text-gray-500 leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
@@ -909,7 +907,7 @@ export function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               From zero to fully automated<br />in under 10 minutes.
             </h2>
-            <p className="mt-4 text-gray-500 text-[15px] max-w-xl mx-auto">
+            <p className="mt-4 text-gray-500 text-base max-w-xl mx-auto">
               No IT team. No training week. No migration project. Most clinics are live before lunch.
             </p>
           </motion.div>
@@ -976,8 +974,8 @@ export function LandingPage() {
                   <span className="inline-block mb-3 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-0.5">
                     {step.time}
                   </span>
-                  <h3 className="text-[17px] font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-[14px] text-gray-500 leading-relaxed max-w-[260px] mx-auto">{step.description}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-[260px] mx-auto">{step.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -992,8 +990,8 @@ export function LandingPage() {
             className="mt-14 text-center"
           >
             <a href="#waitlist">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-[15px] active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
-                Get started in 10 minutes →
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-base active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
+                Get early access →
               </button>
             </a>
           </motion.div>
@@ -1035,14 +1033,31 @@ export function LandingPage() {
             visual={<MessagingAnimation />}
             align="right"
           />
-          <FeatureRow
-            label="RECALL"
-            icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>}
-            title="Patients who haven't returned in 6 months are revenue waiting."
-            description="DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call."
-            visual={<RecallAnimation />}
-            align="left"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="mb-0"
+          >
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>
+                </div>
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">RECALL</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug max-w-2xl mx-auto">
+                Patients who haven&apos;t returned in 6 months are revenue waiting.
+              </h3>
+              <p className="mt-4 text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
+                DentaFlow surfaces every overdue patient and queues their recall message automatically. One review, one click to send. Your chairs fill without anyone making a single phone call.
+              </p>
+            </div>
+            <div className="flex items-center justify-center">
+              <RecallAnimation />
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1056,22 +1071,22 @@ export function LandingPage() {
       <IntegrationSection />
 
       {/* Mid-page CTA band */}
-      <section className="py-14 px-6 bg-emerald-600">
+      <section className="py-16 px-6 bg-emerald-600">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <p className="text-white text-xl font-semibold">Ready to stop managing bookings on WhatsApp?</p>
-            <p className="text-emerald-100 text-[14px] mt-1">Join 40+ Singapore clinics on the early access waitlist.</p>
+            <p className="text-emerald-100 text-sm mt-1">Join 40+ Singapore clinics on the early access waitlist.</p>
           </div>
           <a href="#waitlist">
-            <button className="flex-shrink-0 bg-white hover:bg-gray-50 text-emerald-700 font-semibold px-8 h-12 rounded-lg text-[15px] active:scale-[0.98] transition-all duration-150 whitespace-nowrap">
-              Request early access →
+            <button className="flex-shrink-0 bg-white hover:bg-gray-50 text-emerald-700 font-semibold px-8 h-12 rounded-lg text-base active:scale-[0.98] transition-all duration-150 whitespace-nowrap">
+              Get early access →
             </button>
           </a>
         </div>
       </section>
 
       {/* Comparison table */}
-      <section className="py-24 px-6 bg-gray-50 dot-grid">
+      <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1100,7 +1115,7 @@ export function LandingPage() {
               <div className="px-6 py-5 text-center border-b border-gray-100 border-l border-gray-100">
                 <span className="text-[13px] font-semibold text-gray-400">WhatsApp + Phone</span>
               </div>
-              <div className="px-6 py-5 text-center border-b border-gray-100 border-l border-gray-100 bg-emerald-50/60">
+              <div className="px-6 py-5 text-center border-b border-gray-100 border-l border-emerald-200 bg-emerald-50/60">
                 <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-emerald-700">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                   DentaFlow
@@ -1163,7 +1178,7 @@ export function LandingPage() {
                     {row.wa.text}
                   </span>
                 </div>
-                <div className="px-6 py-4 text-center border-l border-gray-100 bg-emerald-50/40 flex items-center justify-center">
+                <div className="px-6 py-4 text-center border-l border-emerald-100 bg-emerald-50/40 flex items-center justify-center">
                   <span className={`inline-flex items-center gap-1.5 text-[13px] font-medium ${row.df.positive ? "text-gray-800" : "text-gray-600"}`}>
                     {row.df.positive && (
                       <svg className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" viewBox="0 0 14 11" fill="none">
@@ -1186,11 +1201,11 @@ export function LandingPage() {
             className="mt-10 text-center"
           >
             <a href="#waitlist">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-[15px] active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
-                Make the switch →
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 text-base active:scale-[0.98] rounded-lg font-semibold transition-all duration-150">
+                Get early access →
               </button>
             </a>
-            <p className="text-[12px] text-gray-400 mt-3">No commitment. No credit card. Singapore-based support.</p>
+            <p className="text-xs text-gray-400 mt-3">No commitment. No credit card. Singapore-based support.</p>
           </motion.div>
         </div>
       </section>
@@ -1199,7 +1214,7 @@ export function LandingPage() {
       <PricingSection />
 
       {/* Numbers section */}
-      <section className="py-20 bg-emerald-600 px-6">
+      <section className="py-24 bg-emerald-600 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-bold text-white mb-12">
             Clinics using DentaFlow report:
@@ -1228,7 +1243,7 @@ export function LandingPage() {
                 className="text-center"
               >
                 {item.ticker}
-                <p className="mt-2 text-emerald-100 text-[14px]">
+                <p className="mt-2 text-emerald-100 text-sm">
                   {item.label}
                 </p>
               </motion.div>
@@ -1250,7 +1265,7 @@ export function LandingPage() {
               <h2 className="text-3xl font-bold text-gray-900">
                 Built in Singapore. Open worldwide.
               </h2>
-              <p className="mt-4 text-gray-500 text-[15px]">
+              <p className="mt-4 text-gray-500 text-base">
                 We&apos;re onboarding clinics in batches. Leave your details and we&apos;ll reach out when your slot opens — usually within 2 weeks.
               </p>
               <WaitlistForm />
@@ -1266,9 +1281,9 @@ export function LandingPage() {
             <div className="w-6 h-6 rounded bg-emerald-600 flex items-center justify-center">
               <span className="text-white font-bold text-xs">D</span>
             </div>
-            <span className="text-[13px] font-semibold text-gray-700">DentaFlow</span>
+            <span className="text-sm font-semibold text-gray-700">DentaFlow</span>
           </div>
-          <div className="flex items-center gap-6 text-[12px] text-gray-400">
+          <div className="flex items-center gap-6 text-xs text-gray-400">
             <a href="/about" className="hover:text-gray-600 transition-colors">About</a>
             <Link href="/blog" className="hover:text-gray-600 transition-colors">Blog</Link>
             <a href="https://sgdentistry.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">SGDentistry</a>
@@ -1350,7 +1365,7 @@ function PricingSection() {
         >
           <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Pricing</p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Simple pricing. No surprises.</h2>
-          <p className="mt-4 text-[15px] text-gray-500 max-w-xl mx-auto">
+          <p className="mt-4 text-base text-gray-500 max-w-xl mx-auto">
             Start free. Upgrade when you&apos;re ready. No setup fees, no contracts, no per-booking charges.
           </p>
         </motion.div>
@@ -1365,8 +1380,8 @@ function PricingSection() {
               transition={{ delay: i * 0.1 }}
               className={`rounded-2xl border p-6 relative ${
                 plan.highlight
-                  ? "border-emerald-500 bg-emerald-50/40 shadow-lg shadow-emerald-100"
-                  : "border-gray-200 bg-white"
+                  ? "border-emerald-500 bg-emerald-50/40 shadow-lg shadow-emerald-100 order-1 md:order-2"
+                  : plan.name === "Starter" ? "border-gray-200 bg-white order-2 md:order-1" : "border-gray-200 bg-white order-3 md:order-3"
               }`}
             >
               {plan.highlight && (
@@ -1378,12 +1393,12 @@ function PricingSection() {
               )}
 
               <div className="mb-5">
-                <p className="text-[13px] font-semibold text-gray-500 mb-1">{plan.name}</p>
+                <p className="text-sm font-semibold text-gray-500 mb-1">{plan.name}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="text-[13px] text-gray-400">{plan.priceNote}</span>
+                  <span className="text-sm text-gray-400">{plan.priceNote}</span>
                 </div>
-                <p className="text-[13px] text-gray-500 mt-2">{plan.description}</p>
+                <p className="text-sm text-gray-500 mt-2">{plan.description}</p>
               </div>
 
               <ul className="space-y-2.5 mb-6">
@@ -1392,13 +1407,13 @@ function PricingSection() {
                     <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
                       <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <span className="text-[13px] text-gray-600">{f}</span>
+                    <span className="text-sm text-gray-600">{f}</span>
                   </li>
                 ))}
               </ul>
 
               <a href={plan.ctaHref} className="block">
-                <button className={`w-full h-10 rounded-lg text-[13px] font-semibold transition-all active:scale-[0.98] ${
+                <button className={`w-full h-10 rounded-lg text-sm font-semibold transition-all active:scale-[0.98] ${
                   plan.highlight
                     ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                     : "border border-gray-200 bg-white hover:bg-gray-50 text-gray-700"
@@ -1410,7 +1425,7 @@ function PricingSection() {
           ))}
         </div>
 
-        <p className="text-center text-[12px] text-gray-400 mt-8">
+        <p className="text-center text-xs text-gray-400 mt-8">
           All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
         </p>
       </div>
@@ -1481,13 +1496,13 @@ function IntegrationSection() {
               <h2 className="text-2xl font-bold text-gray-900">
                 One line of code. Works everywhere.
               </h2>
-              <p className="text-[14px] text-gray-500 mt-2 max-w-md">
+              <p className="text-sm text-gray-500 mt-2 max-w-md">
                 Add a booking button to your existing site in 2 minutes — or share your DentaFlow link directly if you don&apos;t have one.
               </p>
             </div>
             <a href="#waitlist" className="shrink-0">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 h-10 rounded-lg text-[13px] font-semibold transition-colors whitespace-nowrap">
-                Get your booking link →
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 h-10 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap">
+                Get early access →
               </button>
             </a>
           </div>
@@ -1504,7 +1519,7 @@ function IntegrationSection() {
               className="rounded-xl border border-gray-100 bg-gray-50 p-4"
             >
               <div className="mb-2.5">{item.icon}</div>
-              <p className="text-[13px] font-semibold text-gray-900 mb-0.5">{item.label}</p>
+              <p className="text-sm font-semibold text-gray-900 mb-0.5">{item.label}</p>
               <p className="text-[11px] text-gray-500 leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
@@ -1592,9 +1607,11 @@ function FaqSection() {
                 onClick={() => setOpenIdx(openIdx === i ? null : i)}
                 className="w-full flex items-center justify-between px-5 py-4 text-left"
               >
-                <span className="text-[14px] font-medium text-gray-900 pr-4">{faq.q}</span>
-                <span className={`flex-shrink-0 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-[12px] transition-transform duration-200 ${openIdx === i ? "rotate-180" : ""}`}>
-                  ↓
+                <span className="text-sm font-medium text-gray-900 pr-4">{faq.q}</span>
+                <span className={`flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center transition-transform duration-200 ${openIdx === i ? "rotate-180" : ""}`}>
+                  <svg className="w-3.5 h-3.5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </span>
               </button>
               {openIdx === i && (
@@ -1604,7 +1621,7 @@ function FaqSection() {
                   transition={{ duration: 0.2 }}
                   className="px-5 pb-4"
                 >
-                  <p className="text-[14px] text-gray-500 leading-relaxed border-t border-gray-100 pt-3">{faq.a}</p>
+                  <p className="text-sm text-gray-500 leading-relaxed border-t border-gray-100 pt-3">{faq.a}</p>
                 </motion.div>
               )}
             </motion.div>
@@ -1618,8 +1635,8 @@ function FaqSection() {
           transition={{ delay: 0.3 }}
           className="mt-10 text-center"
         >
-          <p className="text-[13px] text-gray-500">Still have questions?</p>
-          <a href="mailto:hello@dentaflow.com" className="text-[13px] text-emerald-600 hover:underline mt-1 inline-block">
+          <p className="text-sm text-gray-500">Still have questions?</p>
+          <a href="mailto:hello@dentaflow.com" className="text-sm text-emerald-600 hover:underline mt-1 inline-block">
             hello@dentaflow.com →
           </a>
         </motion.div>

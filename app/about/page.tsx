@@ -25,7 +25,7 @@ export default function AboutPage() {
           </div>
           <Link href="/#waitlist">
             <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 rounded-lg font-semibold active:scale-[0.98] transition-all">
-              Request early access
+              Get early access
             </button>
           </Link>
         </div>
@@ -148,7 +148,7 @@ export default function AboutPage() {
           </p>
           <Link href="/#waitlist">
             <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 h-12 rounded-lg text-[15px] font-semibold active:scale-[0.98] transition-all duration-150">
-              Request early access →
+              Get early access →
             </button>
           </Link>
         </div>
