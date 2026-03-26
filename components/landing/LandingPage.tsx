@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { WaitlistForm } from "./WaitlistForm";
 import { NumberTicker } from "./NumberTicker";
@@ -350,6 +351,7 @@ function RecallAnimation() {
 /* ─── Landing Page ─── */
 export function LandingPage() {
   // scrolled state removed — nav is always light
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -369,15 +371,62 @@ export function LandingPage() {
           <div className="hidden md:flex items-center gap-6 text-[13px] text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-gray-900 transition-colors">How it works</a>
+            <a href="#pricing" className="hover:text-gray-900 transition-colors">Pricing</a>
             <a href="/about" className="hover:text-gray-900 transition-colors">About</a>
+            <Link href="/blog" className="hover:text-gray-900 transition-colors">Blog</Link>
             <a href="#waitlist" className="hover:text-gray-900 transition-colors">Early Access</a>
           </div>
-          <a href="#waitlist">
+          <a href="#waitlist" className="hidden md:block">
             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white text-[13px] h-9 px-4 active:scale-[0.98]">
               Request early access
             </Button>
           </a>
+          {/* Hamburger — mobile only */}
+          <button
+            className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+            onClick={() => setMobileNavOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {mobileNavOpen ? (
+              <svg className="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>
+              </svg>
+            )}
+          </button>
         </div>
+        {/* Mobile menu */}
+        {mobileNavOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-1">
+            {[
+              { href: "#features", label: "Features" },
+              { href: "#how-it-works", label: "How it works" },
+              { href: "#pricing", label: "Pricing" },
+              { href: "/about", label: "About" },
+              { href: "/blog", label: "Blog" },
+              { href: "#waitlist", label: "Early Access" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileNavOpen(false)}
+                className="block py-2.5 text-[15px] text-gray-700 hover:text-emerald-700 transition-colors border-b border-gray-50 last:border-0"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="pt-3">
+              <a href="#waitlist" onClick={() => setMobileNavOpen(false)}>
+                <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-11 rounded-lg text-[15px] font-semibold transition-all active:scale-[0.98]">
+                  Request early access →
+                </button>
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero — full light */}
@@ -902,6 +951,9 @@ export function LandingPage() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <PricingSection />
+
       {/* Numbers section */}
       <section className="py-20 bg-emerald-600 px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -974,6 +1026,7 @@ export function LandingPage() {
           </div>
           <div className="flex items-center gap-6 text-[12px] text-gray-400">
             <a href="/about" className="hover:text-gray-600 transition-colors">About</a>
+            <Link href="/blog" className="hover:text-gray-600 transition-colors">Blog</Link>
             <a href="https://sgdentistry.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">SGDentistry</a>
             <a href="#waitlist" className="hover:text-gray-600 transition-colors">Early Access</a>
             <a href="https://dentaflow-three.vercel.app/sign-in" className="hover:text-gray-600 transition-colors">Clinic login →</a>
@@ -982,6 +1035,142 @@ export function LandingPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+/* ─── Pricing Section ─── */
+function PricingSection() {
+  const plans = [
+    {
+      name: "Starter",
+      price: "Free",
+      priceNote: "forever",
+      description: "For solo dentists testing the waters.",
+      features: [
+        "1 active outlet",
+        "Unlimited online bookings",
+        "WhatsApp confirmation (via DentaFlow number)",
+        "Patient profiles",
+        "Basic recall reminders",
+        "DentaFlow booking page",
+      ],
+      cta: "Start free",
+      ctaHref: "#waitlist",
+      highlight: false,
+    },
+    {
+      name: "Core",
+      price: "$49",
+      priceNote: "/ month",
+      description: "For growing clinics that want full automation.",
+      features: [
+        "Up to 3 active outlets",
+        "Everything in Starter",
+        "Custom booking URL slug",
+        "Custom widget colour (brand colours)",
+        "Priority WhatsApp delivery",
+        "CSV patient import",
+        "Email support",
+      ],
+      cta: "Get early access",
+      ctaHref: "#waitlist",
+      highlight: true,
+    },
+    {
+      name: "Pro",
+      price: "$99",
+      priceNote: "/ month",
+      description: "For multi-outlet groups that need more.",
+      features: [
+        "Unlimited outlets",
+        "Everything in Core",
+        "Dedicated WhatsApp Business number",
+        "Analytics by outlet",
+        "Advanced recall campaigns",
+        "Priority support + onboarding call",
+      ],
+      cta: "Talk to us",
+      ctaHref: "#waitlist",
+      highlight: false,
+    },
+  ];
+
+  return (
+    <section id="pricing" className="py-24 px-6 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 mb-3">Pricing</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Simple pricing. No surprises.</h2>
+          <p className="mt-4 text-[15px] text-gray-500 max-w-xl mx-auto">
+            Start free. Upgrade when you&apos;re ready. No setup fees, no contracts, no per-booking charges.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`rounded-2xl border p-6 relative ${
+                plan.highlight
+                  ? "border-emerald-500 bg-emerald-50/40 shadow-lg shadow-emerald-100"
+                  : "border-gray-200 bg-white"
+              }`}
+            >
+              {plan.highlight && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center rounded-full bg-emerald-600 px-3 py-0.5 text-[11px] font-semibold text-white">
+                    Most popular
+                  </span>
+                </div>
+              )}
+
+              <div className="mb-5">
+                <p className="text-[13px] font-semibold text-gray-500 mb-1">{plan.name}</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-[13px] text-gray-400">{plan.priceNote}</span>
+                </div>
+                <p className="text-[13px] text-gray-500 mt-2">{plan.description}</p>
+              </div>
+
+              <ul className="space-y-2.5 mb-6">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5">
+                    <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 14 11" fill="none">
+                      <path d="M1 5.5l4 4L13 1" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span className="text-[13px] text-gray-600">{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a href={plan.ctaHref} className="block">
+                <button className={`w-full h-10 rounded-lg text-[13px] font-semibold transition-all active:scale-[0.98] ${
+                  plan.highlight
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                    : "border border-gray-200 bg-white hover:bg-gray-50 text-gray-700"
+                }`}>
+                  {plan.cta} →
+                </button>
+              </a>
+            </motion.div>
+          ))}
+        </div>
+
+        <p className="text-center text-[12px] text-gray-400 mt-8">
+          All plans include: PDPA-compliant data storage · Singapore-based servers · Free setup · Cancel anytime
+        </p>
+      </div>
+    </section>
   );
 }
 
