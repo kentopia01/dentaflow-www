@@ -408,62 +408,66 @@ function AnalyticsDashboardAnim() {
     { label: "WhatsApp sent", value: "312", delta: "This month", color: "gray" },
   ];
 
+  // Convert % heights to pixel values (chart container is h-16 = 64px)
+  const CHART_H = 64;
+  const barPx = bars.map(h => Math.round((h / 100) * CHART_H));
+
   return (
-    <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+    <div style={{ width: 320 }} className="rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden">
       {/* Dashboard header */}
       <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
         <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">This Month</p>
         <span className="text-[10px] text-gray-400">March 2026</span>
       </div>
 
-      {/* Stat cards */}
+      {/* Stat cards — fixed-height cells to prevent layout shift */}
       <div className="grid grid-cols-3 divide-x divide-gray-100 border-b border-gray-100">
         {stats.map((stat, i) => (
-          <div key={stat.label} className="px-3 py-3">
+          <div key={stat.label} className="px-3 py-3" style={{ height: 72 }}>
             <p className="text-[10px] text-gray-400 mb-1">{stat.label}</p>
-            {phase >= 1 ? (
+            {/* Value — always same height, skeleton fades to number */}
+            <div className="h-[18px] flex items-center">
               <motion.p
                 key={`${cycle}-val-${i}`}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: phase >= 1 ? 1 : 0 }}
                 transition={{ delay: i * 0.12, duration: 0.3 }}
                 className="text-[15px] font-bold text-gray-900 leading-none"
               >
                 {stat.value}
               </motion.p>
-            ) : (
-              <div className="h-4 w-10 rounded bg-gray-100 animate-pulse mt-0.5" />
-            )}
-            {phase >= 3 ? (
+              {phase < 1 && (
+                <div className="absolute h-4 w-10 rounded bg-gray-100 animate-pulse" />
+              )}
+            </div>
+            {/* Delta — always same height */}
+            <div className="h-[14px] mt-0.5 flex items-center">
               <motion.p
                 key={`${cycle}-delta-${i}`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: phase >= 3 ? 1 : 0 }}
                 transition={{ delay: i * 0.1, duration: 0.3 }}
-                className={`text-[10px] mt-0.5 font-medium ${stat.color === "emerald" ? "text-emerald-600" : "text-gray-400"}`}
+                className={`text-[10px] font-medium ${stat.color === "emerald" ? "text-emerald-600" : "text-gray-400"}`}
               >
                 {stat.delta}
               </motion.p>
-            ) : (
-              <div className="h-2.5 w-14 rounded bg-gray-50 mt-1" />
-            )}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Sparkline chart */}
+      {/* Sparkline chart — fixed pixel heights so bars animate correctly */}
       <div className="px-4 py-3">
         <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-3">Weekly appointments</p>
-        <div className="flex items-end gap-1.5 h-16">
-          {bars.map((height, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+        <div className="flex items-end gap-1.5" style={{ height: CHART_H }}>
+          {barPx.map((px, i) => (
+            <div key={i} className="flex-1 flex flex-col justify-end">
               <motion.div
                 key={`${cycle}-bar-${i}`}
                 initial={{ height: 0 }}
-                animate={{ height: phase >= 2 ? `${height}%` : "0%" }}
+                animate={{ height: phase >= 2 ? px : 0 }}
                 transition={{ delay: phase >= 2 ? i * 0.06 : 0, duration: 0.4, ease: "easeOut" }}
                 className={`w-full rounded-t-sm ${i === 6 ? "bg-emerald-600" : "bg-emerald-200"}`}
-                style={{ minHeight: 2 }}
               />
             </div>
           ))}
