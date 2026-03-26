@@ -1035,7 +1035,7 @@ export function LandingPage() {
       <section className="py-16 px-6 bg-emerald-600">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <p className="text-white text-xl font-semibold">Your clinic could be running on autopilot.</p>
+            <p className="text-white text-xl font-semibold">Seamless bookings. Automatic reminders. Patients that keep coming back.</p>
             <p className="text-emerald-100 text-sm mt-1">Starter plan is free. No credit card, no commitment.</p>
           </div>
           <a href="#waitlist">
@@ -1500,8 +1500,8 @@ function SetupSection() {
     },
     {
       time: "Ongoing",
-      title: "Run on autopilot",
-      description: "Patients book. Reminders fire. Recalls queue up. You manage everything from one dashboard instead of 14 WhatsApp chats.",
+      title: "Manage everything from one place.",
+      description: "Patients book, reminders send, recalls queue — and you stay on top of it all from one clean dashboard. No more chasing confirmations across 14 WhatsApp chats.",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-emerald-600">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
