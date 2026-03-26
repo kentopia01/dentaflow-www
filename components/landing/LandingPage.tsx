@@ -20,7 +20,7 @@ function FeatureRow({
   label: string;
   icon?: React.ReactNode;
   title: string;
-  description: string;
+  description: string | React.ReactNode;
   visual: React.ReactNode;
   align: "left" | "right";
 }) {
@@ -1015,24 +1015,77 @@ export function LandingPage() {
           <FeatureRow
             label="BOOKINGS"
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>}
-            title="Online booking that works without a website."
-            description="Every clinic gets a hosted booking page, ready to share anywhere — Google Business Profile, SGDentistry, WhatsApp bio. Each outlet has its own URL. Patients book in under 90 seconds. No calls, no back-and-forth."
+            title="Works with or without a website."
+            description={
+              <div className="space-y-4">
+                <p className="text-base text-gray-500 leading-relaxed">
+                  Every clinic gets a hosted booking page at your own URL — ready to share anywhere patients might find you. If you already have a website, drop in one line of code and a booking button appears on every page.
+                </p>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Works with</p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Google Business Profile", "SGDentistry", "WordPress", "Wix", "Squarespace", "Webflow", "Any website"].map((s) => (
+                      <span key={s} className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-600">{s}</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-400">Patients book in under 90 seconds. No calls, no back-and-forth.</p>
+              </div>
+            }
             visual={<BookingAnimation />}
             align="right"
           />
           <FeatureRow
             label="PATIENTS"
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>}
-            title="One record per patient. Always up to date."
-            description="Patient profiles build automatically from every booking. Import your existing list from Dental4Windows or any CSV. Appointment history, WhatsApp status, and recall schedule — in one place, not scattered across chats."
+            title="Patient records. Real time, always updated."
+            description={
+              <div className="space-y-4">
+                <p className="text-base text-gray-500 leading-relaxed">
+                  Every booking builds a patient profile automatically — appointment history, WhatsApp status, recall schedule — all in one place, not scattered across chats and spreadsheets.
+                </p>
+                <div className="rounded-xl border border-emerald-100 bg-emerald-50/60 px-4 py-3">
+                  <p className="text-sm font-semibold text-gray-800 mb-0.5">Already using existing software?</p>
+                  <p className="text-sm text-gray-500">We handle the migration seamlessly so you can get started right away — no manual re-entry.</p>
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {["Dental4Windows", "CSV / Excel", "Any spreadsheet"].map((s) => (
+                      <span key={s} className="inline-flex items-center rounded-full border border-emerald-200 bg-white px-2.5 py-0.5 text-xs font-medium text-emerald-700">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            }
             visual={<PatientAnimation />}
             align="left"
           />
           <FeatureRow
             label="MESSAGING"
             icon={<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-600"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>}
-            title="The confirmation was sent before you looked up."
-            description="The moment a patient books, a WhatsApp confirmation goes out. A 24-hour reminder follows. Then a 2-hour reminder. No-shows fall by 65%. Your receptionist sends zero manual messages."
+            title="WhatsApp automations built in. Zero setup."
+            description={
+              <div className="space-y-4">
+                <p className="text-base text-gray-500 leading-relaxed">
+                  The moment a patient books, a WhatsApp confirmation goes out automatically. A 24-hour reminder follows. Then a 2-hour reminder before the appointment. Patients never miss — and your receptionist never has to type a single message.
+                </p>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Automatic reminders</p>
+                  <div className="space-y-2">
+                    {[
+                      { label: "Booking confirmed", when: "Immediately on booking" },
+                      { label: "24h reminder", when: "Day before appointment" },
+                      { label: "2h reminder", when: "Morning of appointment" },
+                    ].map((item) => (
+                      <div key={item.label} className="flex items-center gap-3">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                        <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                        <span className="text-xs text-gray-400 ml-auto">{item.when}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm font-semibold text-emerald-700">No-shows fall by up to 65%.</p>
+              </div>
+            }
             visual={<MessagingAnimation />}
             align="right"
           />
