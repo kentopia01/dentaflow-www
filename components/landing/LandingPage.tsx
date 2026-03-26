@@ -272,8 +272,8 @@ function MessagingAnimation() {
   }, [cycle]);
 
   return (
-    <div className="w-full max-w-sm">
-      <div className="rounded-xl border border-gray-200 bg-[#ECE5DD] overflow-hidden" style={{ height: 220 }}>
+    <div style={{ width: 320 }}>
+      <div className="rounded-xl border border-gray-200 bg-[#ECE5DD] overflow-hidden" style={{ height: 220, width: 320 }}>
         {/* Header bar */}
         <div className="bg-[#075E54] px-4 py-2.5 flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-[#128C7E] flex items-center justify-center text-white text-[11px] font-semibold">SD</div>
